@@ -51,13 +51,7 @@ module.exports = {
       origin: {
         type: Sequelize.INTEGER
       },
-      colors: {
-        type: Sequelize.INTEGER
-      },
       quantity: {
-        type: Sequelize.INTEGER
-      },
-      pattern: {
         type: Sequelize.INTEGER
       },
       createdAt: {

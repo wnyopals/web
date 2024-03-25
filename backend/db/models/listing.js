@@ -28,9 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     cut: DataTypes.INTEGER,
     dome: DataTypes.INTEGER,
     origin: DataTypes.INTEGER,
-    colors: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
-    pattern: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Listing',
