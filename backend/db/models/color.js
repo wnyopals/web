@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Color.belongsToMany(models.Listing, {
+        through: "ColorListingJoin",
+        foreignKey: "colorId",
+        otherKey: "listingId"
+      })
     }
   }
   Color.init({
