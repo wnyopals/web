@@ -11,6 +11,55 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      //one to many
+      Listing.belongsTo(models.Cut, {
+        foreignKey: "cut"
+      })
+
+      Listing.belongsTo(models.Brightness, {
+        foreignKey: "brightness"
+      })
+
+      Listing.belongsTo(models.Dome, {
+        foreignKey: "dome"
+      })
+
+      Listing.belongsTo(models.ListingStatus, {
+        foreignKey: "status"
+      })
+
+      Listing.belongsTo(models.Origin, {
+        foreignKey: "origin"
+      })
+
+      Listing.belongsTo(models.BodyTone, {
+        foreignKey: "bodyTone"
+      })
+
+      Listing.belongsTo(models.OpalType, {
+        foreignKey: "type"
+      })
+
+      //many to many
+      Listing.belongsToMany(models.Color, {
+        through: "ColorListingJoin",
+        foreignKey: "listingId",
+        otherKey: "colorId"
+      })
+
+      Listing.belongsToMany(models.Pattern, {
+        through: "PatternListingJoin",
+        foreignKey: "listingId",
+        otherKey: "patternId"
+      })
+
+      Listing.belongsToMany(models.Link, {
+        through: "LinkListingJoin",
+        foreignKey: "listingId",
+        otherKey: "linkId"
+      })
+      //colors, Links, and patterns are the only many to many
     }
   }
   Listing.init({

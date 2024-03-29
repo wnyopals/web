@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ColorListingJoin.init({
+    listingId: DataTypes.INTEGER,
     colorId: DataTypes.INTEGER,
-    listingId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ColorListingJoin',

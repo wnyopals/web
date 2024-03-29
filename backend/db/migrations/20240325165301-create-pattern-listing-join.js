@@ -12,7 +12,7 @@ module.exports = {
       listingId: {
         type: Sequelize.INTEGER
       },
-      patternListingId: {
+      patternId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

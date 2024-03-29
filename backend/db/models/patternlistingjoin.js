@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   PatternListingJoin.init({
     listingId: DataTypes.INTEGER,
-    patternListingId: DataTypes.INTEGER
+    patternId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'PatternListingJoin',
