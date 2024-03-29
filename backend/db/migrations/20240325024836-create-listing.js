@@ -10,7 +10,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "ListingStatuses"}
       },
       title: {
         type: Sequelize.STRING
@@ -22,7 +23,8 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       type: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "OpalTypes"}
       },
       weight: {
         type: Sequelize.FLOAT
@@ -37,19 +39,24 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       bodyTone: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "BodyTones"}
       },
       brightness: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Brightnesses"}
       },
       cut: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Cuts"}
       },
       dome: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Domes"}
       },
       origin: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Origins"}
       },
       quantity: {
         type: Sequelize.INTEGER

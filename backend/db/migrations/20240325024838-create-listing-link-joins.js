@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('PatternListingJoins', {
+    await queryInterface.createTable('ListingLingJoin', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,10 +10,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       listingId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Listings"}
       },
-      patternId: {
-        type: Sequelize.INTEGER
+      linkId: {
+        type: Sequelize.INTEGER,
+        references: {model: "Links"}
       },
       createdAt: {
         allowNull: false,
@@ -26,6 +28,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('PatternListingJoins');
+    await queryInterface.dropTable('ListingLingJoin');
   }
 };
