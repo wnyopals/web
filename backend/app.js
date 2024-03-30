@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 const corsOptions = {
-  origin: isProduction ? "https://wnyopals.onrender.com" : "http://localhost:5173",
+  origin: isProduction ? "https://wnyopals.onrender.com" : "http://localhost:8080",
   credentials: true,
 }
 
