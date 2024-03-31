@@ -5,10 +5,9 @@ const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const { ValidationError } = require("sequelize");
-// const indexRoutes = require('./routes/index');
-// const { environment } = require("./config");
-// const isProduction = environment === "production";
-const isProduction = true;
+const indexRoutes = require('./routes/index');
+const { environment } = require("./config");
+const isProduction = environment === "production";
 
 const app = express();
 
@@ -44,7 +43,7 @@ app.use(
   })
 );
 
-// app.use('/', indexRoutes);
+app.use('/', indexRoutes);
 
 
 app.use((err, _req, _res, next) => {
