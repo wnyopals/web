@@ -7,15 +7,13 @@ const {Op} = require("sequelize");
 
 router.get("/", expressAsyncHandler(async (req, res, next) => {
     const {
-        name
+        listing
     } = req.query;
 
-    console.log(name)
-
     try {
-        if (name) {
+        if (listing) {
             const allListings = await db.Listing.findAll({
-                name
+                listing
             });
             res.json(allListings);
         } else {

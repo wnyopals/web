@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import Index from './Pages'
+import Index from './Pages/Index'
 import ListingResults from './Pages/Listings/ListingResults'
 import SingleListing from './Pages/Listings/SingleListing'
 
