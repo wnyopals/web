@@ -1,23 +1,28 @@
-import {useGetAllListingsQuery} from "../../store/features/apiSlice";
+import { useGetAllListingsQuery } from "../../store/features/apiSlice";
 
 function ListingResults() {
-  const {data} = useGetAllListingsQuery();
+  const response = useGetAllListingsQuery(null);
 
-  const listings = [];
-  for (const l of data) {
-    const listing = (
-      <div>
-        <h3>{l.title}</h3>
-        <p>{l.description}</p>
-      </div>
-    )
-      listings.push(listing);
+  const results = [];
+
+  if (response.status === "fulfilled") {
+    for (const item of response.data) {
+      const component = (
+        <div key={item.id}>
+          <h1>{item.title}</h1>
+          <p>{item.description}</p>
+        </div>
+      )
+      results.push(component)
+    }
+  } else {
+
   }
 
   return (
     <div>
       Listing Results Page
-      {listings}
+      {results}
     </div>
   )
 }
