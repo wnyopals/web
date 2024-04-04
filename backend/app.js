@@ -26,15 +26,16 @@ app.use(cors(corsOptions));
 
 if (isProduction) {
   console.log("PRODUCTION")
-  app.use(
-    csurf({
-      cookie: {
-        secure: isProduction,
-        sameSite: isProduction && "Lax",
-        httpOnly: true,
-      },
-    })
-  );
+  // need to find a better csurf package
+  // app.use(
+  //   csurf({
+  //     cookie: {
+  //       secure: isProduction,
+  //       sameSite: isProduction && "Lax",
+  //       httpOnly: true,
+  //     },
+  //   })
+  // );
 } else {
   console.log("DEVELOPMENT")
 }

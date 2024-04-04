@@ -3,7 +3,8 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 export const listingsApi = createApi({
     reducerPath: "listingsAPI",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:8080/api"
+        // baseUrl: "http://localhost:8080/api"
+        baseUrl: "http://wnyopals.com/api"
     }),
     endpoints: (builder) => ({
         getAllListings: builder.query({
