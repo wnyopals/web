@@ -4,7 +4,7 @@ export const listingsApi = createApi({
     reducerPath: "listingsAPI",
     baseQuery: fetchBaseQuery({
         // baseUrl: "http://localhost:8080/api"
-        baseUrl: "https://wnyopals.com/api"
+        baseUrl: "https://web-main-kxmo.onrender.com"
     }),
     endpoints: (builder) => ({
         getAllListings: builder.query({
