@@ -5,6 +5,8 @@ function ListingResults() {
 
   const results = [];
 
+  console.log("response: ", response)
+
   if (response.status === "fulfilled") {
     for (const item of response.data) {
       const component = (
@@ -15,8 +17,14 @@ function ListingResults() {
       )
       results.push(component)
     }
-  } else {
+  } else if (response.status === "pending") {
+    const component = (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    )
 
+    results.push(component)
   }
 
   return (
