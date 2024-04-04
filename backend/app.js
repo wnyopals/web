@@ -18,7 +18,7 @@ app.use(express.json());
 console.log("isProduction: ", isProduction)
 
 const corsOptions = {
-  origin: isProduction ? "https://web-main-kxmo.onrender.com" : "http://localhost:5173",
+  origin: isProduction ? "https://web-main.onrender.com" : "http://localhost:5173",
   credentials: true,
 }
 
