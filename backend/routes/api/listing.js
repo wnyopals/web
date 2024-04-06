@@ -15,6 +15,7 @@ router.get("/", expressAsyncHandler(async (req, res, next) => {
             const allListings = await db.Listing.findAll({
                 listing
             });
+            if (!allListings) throw new Error("Listing not found")
             res.json(allListings);
         } else {
             const allListings = await db.Listing.findAll();
@@ -24,6 +25,37 @@ router.get("/", expressAsyncHandler(async (req, res, next) => {
         next(e)
     }
 }));
+
+router.get("/:id", expressAsyncHandler(async (req, res, next) => {
+    const {
+        id
+    } = req.params
+
+    try {
+        if (id) {
+            const listing = await db.Listing.findByPk(id, {
+                include: [
+                    {model: db.OpalType, attributes: ['name']},
+                    {model: db.Cut, attributes: ['name']},
+                    {model: db.Dome, attributes: ['name']},
+                    {model: db.Origin, attributes: ['name']},
+                    {model: db.BodyTone, attributes: ['name']},
+                    {model: db.Brightness, attributes: ['name']},
+                    {model: db.Color},
+                    {model: db.Pattern},
+                    // {model: db.Link}
+                ],
+                attributes: {
+                    exclude: ['bodyTone', 'cut', 'dome', 'origin', 'bodyTone', 'brightness', 'type'],
+                  },
+            });
+            if (!listing) throw new Error("Listing not found")
+            res.json(listing)
+        } 
+    } catch (e) {
+        next(e)
+    }
+}))
 
 router.post("/", expressAsyncHandler(async (req, res, next) => {
     const {

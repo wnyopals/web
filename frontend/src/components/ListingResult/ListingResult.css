@@ -1,0 +1,6 @@
+.listing-result{
+    width:100%;
+    border: solid black 1px;
+    max-height: 350px;
+    max-width:250px;
+}

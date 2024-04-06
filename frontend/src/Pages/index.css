@@ -1,0 +1,6 @@
+.header > img{
+    border: solid black 1px;
+    height: 250px;
+    width: 90%;
+    margin: 0 auto;
+}

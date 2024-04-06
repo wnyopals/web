@@ -1,0 +1,21 @@
+nav {
+    padding: 1.25rem;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: solid black 1px;
+    border-radius: 15px;
+}
+
+.navlink{
+    padding: 5px 15px;
+    text-decoration: none;
+    color: black;
+    border: solid black 1px;
+}
+
+.active{
+    text-decoration: underline;
+}

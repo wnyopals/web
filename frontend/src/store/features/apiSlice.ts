@@ -3,8 +3,8 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 export const listingsApi = createApi({
     reducerPath: "listingsAPI",
     baseQuery: fetchBaseQuery({
-        // baseUrl: "http://localhost:8080/api"
-        baseUrl: "https://web-main.onrender.com/api"
+        baseUrl: "http://localhost:8080/api"
+        // baseUrl: "https://web-main.onrender.com/api"
     }),
     endpoints: (builder) => ({
         getAllListings: builder.query({
@@ -12,11 +12,15 @@ export const listingsApi = createApi({
         }),
         getListingByTitle: builder.query({
             query: (title) => `listing?title=${title}` 
+        }),
+        getListingById: builder.query({
+            query: (id) => `listing/${id}`
         })
     })
 })
 
 export const {
     useGetAllListingsQuery,
-    useGetListingByTitleQuery
+    useGetListingByTitleQuery,
+    useGetListingByIdQuery,
 } = listingsApi
