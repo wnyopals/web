@@ -12,11 +12,15 @@ export const listingsApi = createApi({
         }),
         getListingByTitle: builder.query({
             query: (title) => `listing?title=${title}` 
+        }),
+        getListingById: builder.query({
+            query: (id) => `listing/${id}`
         })
     })
 })
 
 export const {
     useGetAllListingsQuery,
-    useGetListingByTitleQuery
+    useGetListingByTitleQuery,
+    useGetListingByIdQuery,
 } = listingsApi

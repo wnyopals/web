@@ -1,0 +1,8 @@
+.listing-results{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    border: solid black 1px;
+    gap: 10%;
+    min-height: 80svh;
+}

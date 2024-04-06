@@ -1,0 +1,41 @@
+.listing-container {
+    border: solid black 1px;
+    border-radius: 15px;
+    padding: 1.25rem;
+}
+
+.showcase {
+    border: solid black 1px;
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.basic-info{
+    display: flex;
+    flex-direction: row;
+    gap: 15%;
+    width: 80%
+}
+
+.purchase-info{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    text-align: center;
+}
+
+.photos > img {
+    border: solid black 1px;
+    width: 250px;
+    height: 250px;
+}
+
+.information-item{
+    display: flex;
+    flex-direction: row;
+    gap: 1.25rem;
+    align-items: center;
+}

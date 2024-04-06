@@ -1,4 +1,8 @@
+import { Link } from "react-router-dom";
+import ListingResult from "../../components/ListingResult/ListingResult";
 import { useGetAllListingsQuery } from "../../store/features/apiSlice";
+import "./ListingResults.css"
+
 
 function ListingResults() {
   const response = useGetAllListingsQuery(null);
@@ -8,12 +12,11 @@ function ListingResults() {
   console.log("response: ", response)
 
   if (response.status === "fulfilled") {
-    for (const item of response.data) {
+    for (const listing of response.data) {
       const component = (
-        <div key={item.id}>
-          <h1>{item.title}</h1>
-          <p>{item.description}</p>
-        </div>
+        <Link to={`/listing/${listing?.id}`}>
+          <ListingResult listing={listing}/>
+        </Link>
       )
       results.push(component)
     }
@@ -28,8 +31,7 @@ function ListingResults() {
   }
 
   return (
-    <div>
-      Listing Results Page
+    <div className="listing-results">
       {results}
     </div>
   )

@@ -22,6 +22,8 @@ const corsOptions = {
   credentials: true,
 }
 
+console.log("CORS Option: ", corsOptions)
+
 app.use(cors(corsOptions));
 
 if (isProduction) {
