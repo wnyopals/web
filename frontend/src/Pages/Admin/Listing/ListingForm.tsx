@@ -9,7 +9,7 @@ const ListingForm = () => {
     const cutsData = useGetCutsQuery(null);
     const domeData = useGetDomesQuery(null);
     const originsData = useGetOriginsQuery(null);
-    const bodyTones = useGetBodyTonesQuery(null);
+    const bodyTonesData = useGetBodyTonesQuery(null);
     const colorsData = useGetColorsQuery(null);
     const patternsData = useGetPatternsQuery(null)
 
@@ -28,16 +28,23 @@ const ListingForm = () => {
     const [dome, setDome] = useState(1);
     const [origin, setOrigin] = useState(1);
     const [bodyTome, setBodyTone] = useState(1);
-    const [colors, setColors] = useState(1);
     // add all colors here
-    const [allColors, setAllColors] = useState([]) 
-    const [patterns, setPatterns] = useState(1);
+    const [allColors, setAllColors] = useState<number[]>([]) 
     // add all patterns here
-    const [allPatterns, setAllPatterns] = useState([])
+    const [allPatterns, setAllPatterns] = useState<number[]>([])
   
 
-    function onStatusChange (e) {
-        setStatus(e.target.value)
+    function onColorButtonClick(e) {
+        e.preventDefault()
+        console.log(e.target.value)
+        const value = allColors?.findIndex(element => element === parseInt(e.target.value))
+        if (value >= 0) {
+            setAllColors(allColors?.filter((value) => value !== parseInt(e.target.value)))
+            return
+        } else {
+            setAllColors([...allColors, parseInt(e.target.value)])
+            return
+        }
     }
 
     return (
@@ -58,6 +65,7 @@ const ListingForm = () => {
         </div>
         <br/>
         <div>
+            <label>Size (LxWxD)</label>
             <input type="number" value={length} onChange={e => setLength(parseFloat(e.target.value))}/>
             <span>x</span>
             <input type="number" value={width} onChange={e => setWidth(parseFloat(e.target.value))}/>
@@ -70,52 +78,62 @@ const ListingForm = () => {
             <input type="number" value={quantity} onChange={e => setQuantity(parseFloat(e.target.value))}/>
         </div>
         <br/>
-        <select value={status}>
+        <select onChange={e => setStatus(parseInt(e.target.value))} value={status}>
             <label>status</label>
             {statusData?.data?.map(statusData => (
                 <option value={statusData?.id}>{statusData?.name}</option>
             ))}
         </select>
         <br/>
-        <select value={opalType}>
+        <select onChange={e => setOpalType(parseInt(e.target.value))} value={opalType}>
             {opalTypeData?.data?.map(opalType => (
                 <option value={opalType?.id}>{opalType?.name}</option>
             ))}
         </select>
         <br/>
-        <select value={cut}>
+        <select onChange={e => setCut(parseInt(e.target.value))} value={cut}>
             {cutsData?.data?.map(cuts => (
                 <option value={cuts?.id}>{cuts?.name}</option>
             ))}
         </select>
         <br/>
-        <select value={dome}>
+        <select onChange={e => setDome(parseInt(e.target.value))} value={dome}>
             {domeData?.data?.map(dome => (
                 <option value={dome?.id}>{dome?.name}</option>
             ))}
         </select>
         <br/>
-        <select value={origin}>
+        <select onChange={e => setOrigin(parseInt(e.target.value))} value={origin}>
             {originsData?.data?.map(origin => (
                 <option value={origin?.id}>{origin?.name}</option>
             ))}
         </select>
         <br/>
+        <select onChange={e => setBodyTone(parseInt(e.target.value))} value={origin}>
+            {bodyTonesData?.data?.map(bodyTone => (
+                <option value={bodyTone?.id}>{bodyTone?.name}</option>
+            ))}
+        </select>
+        <br/>
         <div>
-            <select value={colors}>
-                {colorsData?.data?.map(colors => (
-                    <option value={colors?.id}>{colors?.name}</option>
-                ))}
-            </select>
-            <button>Add to listing</button>
+            <label>Colors</label><br/>
+            {colorsData?.data?.map(color => (
+                <>
+                    {allColors?.indexOf(color?.id) >= 0 ? 
+                        <button onClick={onColorButtonClick} value={color?.id}>add {color?.name}</button>
+                        :
+                        <button onClick={onColorButtonClick} value={color?.id}>remove {color?.name}</button>
+                    }
+                    <br/>
+                </>
+            ))}
         </div>
+        <br/>
         <div>
-            <select value={patterns}>
-                {patternsData?.data?.map(patterns => (
-                    <option value={patterns?.id}>{patterns?.name}</option>
-                ))}
-            </select>
-            <button>Add to listing</button>
+            <label>Patterns</label><br/>
+            {patternsData?.data?.map(pattern => (
+                <><button value={pattern?.id}>{pattern?.name}</button><br/></>
+            ))}
         </div>
     </form>
   )
