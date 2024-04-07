@@ -1,17 +1,8 @@
 import "./ListingResult.css"
 
-type listingResponse = {
-  listing: {
-    title: string,
-    description: string,
-    length: number,
-    width: number,
-    height: number,
-    price: number
-  }
-}
+import { listing } from "../../../types/Listing"
 
-const ListingResult = ({listing}: listingResponse) => {
+const ListingResult: React.FC<{listing: listing}> = ({listing}) => {
   return (
     <div className="listing-result">
       <img />
