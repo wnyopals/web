@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
-import { listing } from "../../../types/Listing"
+import { listing, listingRequest } from "../../../types/Listing"
+import { Attribute } from "../../../types/Attributes"
 
 export const listingsApi = createApi({
     reducerPath: "listingsAPI",
@@ -8,42 +9,75 @@ export const listingsApi = createApi({
         baseUrl: "http://localhost:8080/api"
         // baseUrl: "https://web-main.onrender.com/api"
     }),
+    tagTypes: ['Listing', 'Attributes'],
     endpoints: (builder) => ({
         getAllListings: builder.query<listing[], void>({
-            query: () => "listing"
+            query: () => "listing",
+            providesTags: ['Listing']
         }),
         getListingByTitle: builder.query<listing[], string>({
-            query: (title) => `listing?title=${title}` 
+            query: (title) => `listing?title=${title}` ,
+            providesTags: ['Listing']
         }),
-        getListingById: builder.query<listing[], number>({
-            query: (id) => `listing/${id}`
+        getListingById: builder.query<listing, number>({
+            query: (id) => `listing/${id}`,
+            providesTags: ["Listing"]
         }),
-        getBrightnesses: builder.query({
-            query: () => `attributes/brightnesses`
+        addListing: builder.mutation<listing, listingRequest>({
+            query: (newListing) => (
+                {
+                    url: "/listing",
+                    method: "POST",
+                    body: newListing,
+                }
+            ),
+            invalidatesTags: ["Listing"]
         }),
-        getCuts: builder.query({
-            query: () => `attributes/cuts`
+        updateListing: builder.mutation<Partial<listing>, listing>({
+            query: (updatedListing) => (
+                {
+                    url: `/listing/${updatedListing?.id}`,
+                    method: "PUT",
+                    body: updatedListing
+                }
+            ),
+            invalidatesTags: ["Listing"]
         }),
-        getListingStatuses: builder.query({
-            query: () => `attributes/listingstatuses`
+        getBrightnesses: builder.query<Attribute[], void>({
+            query: () => `attributes/brightnesses`,
+            providesTags: ["Attributes"]
         }),
-        getOpalTypes: builder.query({
-            query: () => `attributes/opaltypes`
+        getCuts: builder.query<Attribute[], void>({
+            query: () => `attributes/cuts`,
+            providesTags: ['Attributes']
         }),
-        getBodyTones: builder.query({
-            query: () => `attributes/bodytones`
+        getListingStatuses: builder.query<Attribute[], void>({
+            query: () => `attributes/listingstatuses`,
+            providesTags: ['Attributes']
         }),
-        getDomes: builder.query({
-            query: () => `attributes/domes`
+        getOpalTypes: builder.query<Attribute[], void>({
+            query: () => `attributes/opaltypes`,
+            providesTags: ['Attributes']
         }),
-        getOrigins: builder.query({
-            query: () => `attributes/origins`
+        getBodyTones: builder.query<Attribute[], void>({
+            query: () => `attributes/bodytones`,
+            providesTags: ['Attributes']
         }),
-        getColors: builder.query({
-            query: () => `attributes/colors`
+        getDomes: builder.query<Attribute[], void>({
+            query: () => `attributes/domes`,
+            providesTags: ['Attributes']
         }),
-        getPatterns: builder.query({
-            query: () => `attributes/patterns`
+        getOrigins: builder.query<Attribute[], void>({
+            query: () => `attributes/origins`,
+            providesTags: ['Attributes']
+        }),
+        getColors: builder.query<Attribute[], void>({
+            query: () => `attributes/colors`,
+            providesTags: ['Attributes']
+        }),
+        getPatterns: builder.query<Attribute[], void>({
+            query: () => `attributes/patterns`,
+            providesTags: ['Attributes']
         }),
 
     })
@@ -61,5 +95,7 @@ export const {
     useGetDomesQuery,
     useGetOriginsQuery,
     useGetColorsQuery,
-    useGetPatternsQuery
+    useGetPatternsQuery,
+    useAddListingMutation,
+    useUpdateListingMutation
 } = listingsApi
