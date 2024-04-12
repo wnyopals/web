@@ -6,8 +6,8 @@ import { Attribute } from "../../../types/Attributes"
 export const listingsApi = createApi({
     reducerPath: "listingsAPI",
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:8080/api"
-        // baseUrl: "https://web-main.onrender.com/api"
+        // baseUrl: "http://localhost:8080/api"
+        baseUrl: "https://web-main.onrender.com/api"
     }),
     tagTypes: ['Listing', 'Attributes'],
     endpoints: (builder) => ({
