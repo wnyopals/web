@@ -4,15 +4,13 @@ import { useGetAllListingsQuery } from "../../store/features/apiSlice";
 import "./ListingResults.css"
 
 
-function ListingResults() {
-  const response = useGetAllListingsQuery(null);
+function ListingResults(){
+  const {data, isLoading, isError, isSuccess} = useGetAllListingsQuery();
 
   const results = [];
 
-  console.log("response: ", response)
-
-  if (response.status === "fulfilled") {
-    for (const listing of response.data) {
+  if (isSuccess) {
+    for (const listing of data) {
       const component = (
         <Link to={`/listing/${listing?.id}`}>
           <ListingResult listing={listing}/>
@@ -20,13 +18,19 @@ function ListingResults() {
       )
       results.push(component)
     }
-  } else if (response.status === "pending") {
+  } else if (isLoading) {
     const component = (
       <div>
         <h1>Loading...</h1>
       </div>
     )
-
+    results.push(component)
+  } else if (isError) {
+    const component = (
+      <div>
+        <h1>Error</h1>
+      </div>
+    )
     results.push(component)
   }
 
