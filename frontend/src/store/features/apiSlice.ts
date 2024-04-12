@@ -1,21 +1,85 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
+import { listing, listingRequest } from "../../../types/Listing"
+import { Attribute } from "../../../types/Attributes"
+
 export const listingsApi = createApi({
     reducerPath: "listingsAPI",
     baseQuery: fetchBaseQuery({
         // baseUrl: "http://localhost:8080/api"
         baseUrl: "https://web-main.onrender.com/api"
     }),
+    tagTypes: ['Listing', 'Attributes'],
     endpoints: (builder) => ({
-        getAllListings: builder.query({
-            query: () => "listing"
+        getAllListings: builder.query<listing[], void>({
+            query: () => "listing",
+            providesTags: ['Listing']
         }),
-        getListingByTitle: builder.query({
-            query: (title) => `listing?title=${title}` 
+        getListingByTitle: builder.query<listing[], string>({
+            query: (title) => `listing?title=${title}` ,
+            providesTags: ['Listing']
         }),
-        getListingById: builder.query({
-            query: (id) => `listing/${id}`
-        })
+        getListingById: builder.query<listing, number>({
+            query: (id) => `listing/${id}`,
+            providesTags: ["Listing"]
+        }),
+        addListing: builder.mutation<listing, listingRequest>({
+            query: (newListing) => (
+                {
+                    url: "/listing",
+                    method: "POST",
+                    body: newListing,
+                }
+            ),
+            invalidatesTags: ["Listing"]
+        }),
+        updateListing: builder.mutation<Partial<listing>, listing>({
+            query: (updatedListing) => (
+                {
+                    url: `/listing/${updatedListing?.id}`,
+                    method: "PUT",
+                    body: updatedListing
+                }
+            ),
+            invalidatesTags: ["Listing"]
+        }),
+        getBrightnesses: builder.query<Attribute[], void>({
+            query: () => `attributes/brightnesses`,
+            providesTags: ["Attributes"]
+        }),
+        getCuts: builder.query<Attribute[], void>({
+            query: () => `attributes/cuts`,
+            providesTags: ['Attributes']
+        }),
+        getListingStatuses: builder.query<Attribute[], void>({
+            query: () => `attributes/listingstatuses`,
+            providesTags: ['Attributes']
+        }),
+        getOpalTypes: builder.query<Attribute[], void>({
+            query: () => `attributes/opaltypes`,
+            providesTags: ['Attributes']
+        }),
+        getBodyTones: builder.query<Attribute[], void>({
+            query: () => `attributes/bodytones`,
+            providesTags: ['Attributes']
+        }),
+        getDomes: builder.query<Attribute[], void>({
+            query: () => `attributes/domes`,
+            providesTags: ['Attributes']
+        }),
+        getOrigins: builder.query<Attribute[], void>({
+            query: () => `attributes/origins`,
+            providesTags: ['Attributes']
+        }),
+        getColors: builder.query<Attribute[], void>({
+            query: () => `attributes/colors`,
+            providesTags: ['Attributes']
+        }),
+        getPatterns: builder.query<Attribute[], void>({
+            query: () => `attributes/patterns`,
+            providesTags: ['Attributes']
+        }),
+
     })
 })
 
@@ -23,4 +87,15 @@ export const {
     useGetAllListingsQuery,
     useGetListingByTitleQuery,
     useGetListingByIdQuery,
+    useGetBrightnessesQuery,
+    useGetCutsQuery,
+    useGetListingStatusesQuery,
+    useGetOpalTypesQuery,
+    useGetBodyTonesQuery,
+    useGetDomesQuery,
+    useGetOriginsQuery,
+    useGetColorsQuery,
+    useGetPatternsQuery,
+    useAddListingMutation,
+    useUpdateListingMutation
 } = listingsApi

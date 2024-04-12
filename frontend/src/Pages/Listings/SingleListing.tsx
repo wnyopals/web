@@ -5,7 +5,7 @@ import "./SingleListing.css"
 
 const SingleListing = () => {
   const params = useParams();
-  const { status, data } = useGetListingByIdQuery(params.id)
+  const { status, data } = useGetListingByIdQuery(parseInt(params.id || "0"))
 
   console.log("Status: ", status);
   console.log("Data: ", data);
