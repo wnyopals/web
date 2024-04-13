@@ -11,12 +11,12 @@ import {
   useGetOriginsQuery,
   useGetPatternsQuery,
 } from "../../../store/features/apiSlice";
-import { listingRequest } from "../../../../types/Listing";
+import { listing, listingRequest } from "../../../../types/Listing";
 // import { Attribute } from "../../../../types/Attributes";
 
-const ListingForm = () => {
+const ListingForm: React.FC<{listing: listing | undefined}> = ({listing}) => {
+  
   //data
-
   const statusData = useGetListingStatusesQuery();
   const opalTypeData = useGetOpalTypesQuery();
   const cutsData = useGetCutsQuery();
@@ -28,22 +28,22 @@ const ListingForm = () => {
   const brightnessData = useGetBrightnessesQuery()
 
   //modify
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0.0);
-  const [length, setLength] = useState(0.0);
-  const [width, setWidth] = useState(0.0);
-  const [height, setHeight] = useState(0.0);
-  const [quantity, setQuantity] = useState(0);
+  const [title, setTitle] = useState(listing?.title ?? "");
+  const [description, setDescription] = useState(listing?.description ?? "");
+  const [price, setPrice] = useState(listing?.price ?? 0.0);
+  const [length, setLength] = useState(listing?.length ?? 0.0);
+  const [width, setWidth] = useState(listing?.width ?? 0.0);
+  const [height, setHeight] = useState(listing?.height ?? 0.0);
+  const [quantity, setQuantity] = useState(listing?.quantity ?? 0);
   const [weight, setWeight] = useState(0.0)
 
-  const [status, setStatus] = useState<number>(0);
-  const [opalType, setOpalType] = useState<number>(0);
-  const [cut, setCut] = useState<number>(0);
-  const [dome, setDome] = useState<number>(0);
-  const [origin, setOrigin] = useState<number>(0);
-  const [bodyTone, setBodyTone] = useState<number>(0);
-  const [brightness, setBrightness] = useState<number>(0)
+  const [status, setStatus] = useState<number>(listing?.status ?? 0);
+  const [opalType, setOpalType] = useState<number>(listing?.OpalType?.id ?? 0);
+  const [cut, setCut] = useState<number>(listing?.Cut?.id ?? 0);
+  const [dome, setDome] = useState<number>(listing?.Dome?.id ?? 0);
+  const [origin, setOrigin] = useState<number>(listing?.Origin?.id ?? 0);
+  const [bodyTone, setBodyTone] = useState<number>(listing?.BodyTone?.id ?? 0);
+  const [brightness, setBrightness] = useState<number>(listing?.Brightness?.id ?? 0)
   const [selectedColor, setSelectedColor] = useState<number>(-1)
   const [selectedPattern, setSelectedPattern] = useState<number>(-1)
   // add all colors here
@@ -77,9 +77,9 @@ const ListingForm = () => {
       origin,
       bodyTone,
       weight,
-      brightness
-      // colors: allColors,
-      // patterns: allPatterns
+      brightness,
+      colors: allColors,
+      patterns: allPatterns
     }
 
     addListing(newListing)

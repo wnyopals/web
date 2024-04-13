@@ -11,6 +11,8 @@ const ListingResult: React.FC<{listing: listing}> = ({listing}) => {
       <span className="quick-info">{listing?.length}x{listing?.width}x{listing?.height}</span>
       <br></br>
       <span className="price">{listing?.price}</span>
+      <br/>
+      <button>Edit listing</button>
     </div>
   )
 }

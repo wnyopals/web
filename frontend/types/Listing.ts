@@ -1,3 +1,5 @@
+import { Attribute } from "./Attributes";
+
 export type listing = {
     id?: number;
     status: number | null;
@@ -10,17 +12,31 @@ export type listing = {
     height: number;
     quantity: number;
     OpalType: {
+        id: number;
         name: string;
     };
     Cut: {
-        name: string
+        id: number;
+        name: string;
     };
-    Dome: {name: string};
-    Origin: {name: string};
-    BodyTone: {name: string};
-    Brightness: {name:string};
-    Colors: string [];
-    Patterns: string [];
+    Dome: {
+        id: number;
+        name: string;
+    };
+    Origin: {
+        id: number;
+        name: string;
+    };
+    BodyTone: {
+        id: number;
+        name: string;
+    };
+    Brightness: {
+        id: number;
+        name: string;
+    };
+    Colors: Attribute [];
+    Patterns: Attribute [];
 }
 
 export type listingRequest = {
@@ -40,6 +56,6 @@ export type listingRequest = {
     origin: number;
     bodyTone: number;
     brightness: number;
-    // colors: string [];
-    // patterns: string [];
+    colors: number [];
+    patterns: number [];
 }
