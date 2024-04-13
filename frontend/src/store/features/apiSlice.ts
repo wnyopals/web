@@ -43,6 +43,15 @@ export const listingsApi = createApi({
             ),
             invalidatesTags: ["Listing"]
         }),
+        deleteListing: builder.mutation<number, number>({
+            query: (listingId) => (
+                {
+                    url: `/listing/${listingId}`,
+                    method: "DELETE",
+                }
+            ),
+            invalidatesTags: ["Listing"]
+        }),
         getBrightnesses: builder.query<Attribute[], void>({
             query: () => `attributes/brightnesses`,
             providesTags: ["Attributes"]
@@ -97,5 +106,6 @@ export const {
     useGetColorsQuery,
     useGetPatternsQuery,
     useAddListingMutation,
-    useUpdateListingMutation
+    useUpdateListingMutation,
+    useDeleteListingMutation
 } = listingsApi
