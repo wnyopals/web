@@ -45,19 +45,22 @@ module.exports = (sequelize, DataTypes) => {
       Listing.belongsToMany(models.Color, {
         through: "ColorListingJoin",
         foreignKey: "listingId",
-        otherKey: "colorId"
+        otherKey: "colorId",
+        onDelete: "CASCADE"
       })
 
       Listing.belongsToMany(models.Pattern, {
         through: "PatternListingJoin",
         foreignKey: "listingId",
-        otherKey: "patternId"
+        otherKey: "patternId",
+        onDelete: "CASCADE"
       })
 
       Listing.belongsToMany(models.Link, {
         through: "LinkListingJoin",
         foreignKey: "listingId",
-        otherKey: "linkId"
+        otherKey: "linkId",
+        onDelete: "CASCADE"
       })
       //colors, Links, and patterns are the only many to many
     }

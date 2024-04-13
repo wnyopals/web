@@ -6,14 +6,22 @@ const { Op } = require("sequelize");
 
 const queryArgs = {
   include: [
-    { model: db.OpalType, attributes: ["name"] },
-    { model: db.Cut, attributes: ["name"] },
-    { model: db.Dome, attributes: ["name"] },
-    { model: db.Origin, attributes: ["name"] },
-    { model: db.BodyTone, attributes: ["name"] },
-    { model: db.Brightness, attributes: ["name"] },
-    { model: db.Color },
-    { model: db.Pattern },
+    { model: db.OpalType, attributes: ["id", "name"] },
+    { model: db.Cut, attributes: ["id", "name"] },
+    { model: db.Dome, attributes: ["id", "name"] },
+    { model: db.Origin, attributes: ["id", "name"] },
+    { model: db.BodyTone, attributes: ["id", "name"] },
+    { model: db.Brightness, attributes: ["id", "name"] },
+    {
+      model: db.Color,
+      through: { attributes: [] },
+      attributes: ["id", "name", "description"],
+    },
+    {
+      model: db.Pattern,
+      through: { attributes: [] },
+      attributes: ["id", "name", "description"],
+    },
     // {model: db.Link}
   ],
   attributes: {
@@ -29,7 +37,7 @@ const queryArgs = {
       "updatedAt",
     ],
   },
-}
+};
 
 router.get(
   "/",
@@ -41,12 +49,11 @@ router.get(
         const allListings = await db.Listing.findAll({
           where: {
             title: {
-              [Op.like]: `%${title}%`
-            }
+              [Op.like]: `%${title}%`,
+            },
           },
-          ...queryArgs
-        }
-      );
+          ...queryArgs,
+        });
         if (!allListings) throw new Error("Listing not found");
         res.json(allListings);
       } else {
@@ -67,7 +74,7 @@ router.get(
     try {
       if (id) {
         const listing = await db.Listing.findByPk(id, {
-          ...queryArgs
+          ...queryArgs,
         });
         if (!listing) throw new Error("Listing not found");
         res.json(listing);
@@ -97,6 +104,8 @@ router.post(
       dome,
       origin,
       quantity,
+      colors,
+      patterns,
     } = req.body;
 
     const noValueErrors = [];
@@ -151,7 +160,12 @@ router.post(
       quantity,
     });
 
-    res.json(newListing);
+    await newListing.setColors(colors);
+    await newListing.setPatterns(patterns);
+
+    const createdListing = await db.Listing.findByPk(newListing?.id, queryArgs);
+
+    res.json(createdListing);
   })
 );
 
@@ -174,10 +188,44 @@ router.put(
       dome,
       origin,
       quantity,
+      colors,
+      patterns
     } = req.body;
-    throw new Error(
-      "API Endpoint not completed yet. Please use the patch endpoint!!"
-    );
+    console.log()
+      try {
+        const listing = await db.Listing.findByPk(parseInt(req.params.id), queryArgs)
+        //operations for figuring out what colors to add/remove
+        const colorsToRemove = listing.Colors.filter(color => !colors.includes(color.id)).map(colorObj => colorObj.id)
+        const colorsToAdd = colors.filter(colorId => !listing.Colors.some(color => color.id === colorId))
+        //operations for figuring out what patterns to add/remove (similar concept to above)
+        const patternsToRemove = listing.Patterns.filter(pattern => !patterns.includes(pattern.id)).map(patternObj => patternObj.id)
+        const patternsToAdd = patterns.filter(patternId => !listing.Patterns.some(pattern => pattern.id === patternId));
+        // attempt to add the patterns and colors. if they don't exist an error should be thrown
+        await listing.removeColors(colorsToRemove);
+        await listing.removePatterns(patternsToRemove);
+        await listing.addColors(colorsToAdd);
+        await listing.addPatterns(patternsToAdd);
+        await listing.update({
+          title,
+          description,
+          price,
+          type,
+          weight,
+          length,
+          width,
+          height,
+          bodyTone,
+          brightness,
+          cut,
+          dome,
+          origin,
+          quantity,
+        })
+        const updatedListing = await db.Listing.findByPk(parseInt(req.params.id), queryArgs);
+        res.json(updatedListing)
+      } catch( e ) {
+        next(e)
+      }
   })
 );
 
@@ -202,11 +250,16 @@ router.delete(
   expressAsyncHandler(async (req, res, next) => {
     console.log(req.params);
     try {
-      const listing = await db.Listing.findByPk(parseInt(req.params.id));
+      const listing = await db.Listing.findByPk(parseInt(req.params.id), queryArgs);
+      const colors = listing.Colors.map(color => color.id);
+      const patterns = listing.Patterns.map(pattern => pattern.id);
       if (!listing)
         throw new Error(`Listing with id ${id} not found. Try another id?`);
+      await listing.removeColors(colors);
+      await listing.removePatterns(patterns);
       await listing.destroy();
-      res.json({ message: `Listing with the id ${id} was deleted` });
+      console.log(listing)
+      res.json({ message: `Listing with the id ${req.params.id} was deleted` });
     } catch (e) {
       next(e);
     }
