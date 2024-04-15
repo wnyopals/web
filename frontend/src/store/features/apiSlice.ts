@@ -33,7 +33,7 @@ export const listingsApi = createApi({
             ),
             invalidatesTags: ["Listing"]
         }),
-        updateListing: builder.mutation<Partial<listing>, listing>({
+        updateListing: builder.mutation<listing, listingRequest>({
             query: (updatedListing) => (
                 {
                     url: `/listing/${updatedListing?.id}`,

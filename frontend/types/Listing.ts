@@ -57,5 +57,5 @@ export type listingRequest = {
     bodyTone: number;
     brightness: number;
     colors: number [];
-    patterns: number [];
+    patterns: number [];   
 }
