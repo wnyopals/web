@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Color.belongsToMany(models.Listing, {
         through: "ColorListingJoin",
         foreignKey: "colorId",
-        otherKey: "listingId"
+        otherKey: "listingId",
       })
     }
   }

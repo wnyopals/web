@@ -33,12 +33,21 @@ export const listingsApi = createApi({
             ),
             invalidatesTags: ["Listing"]
         }),
-        updateListing: builder.mutation<Partial<listing>, listing>({
+        updateListing: builder.mutation<listing, listingRequest>({
             query: (updatedListing) => (
                 {
                     url: `/listing/${updatedListing?.id}`,
                     method: "PUT",
                     body: updatedListing
+                }
+            ),
+            invalidatesTags: ["Listing"]
+        }),
+        deleteListing: builder.mutation<number, number>({
+            query: (listingId) => (
+                {
+                    url: `/listing/${listingId}`,
+                    method: "DELETE",
                 }
             ),
             invalidatesTags: ["Listing"]
@@ -97,5 +106,6 @@ export const {
     useGetColorsQuery,
     useGetPatternsQuery,
     useAddListingMutation,
-    useUpdateListingMutation
+    useUpdateListingMutation,
+    useDeleteListingMutation
 } = listingsApi

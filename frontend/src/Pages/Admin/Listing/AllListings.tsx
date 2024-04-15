@@ -13,8 +13,6 @@ const AllListings: React.FC = () => {
       return (
         <>
           <ListingResult listing={listing} />
-          <button>Edit</button>
-          <button>Delete</button>
         </>
       );
     });

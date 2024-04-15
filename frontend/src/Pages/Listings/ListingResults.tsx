@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import ListingResult from "../../components/ListingResult/ListingResult";
 import { useGetAllListingsQuery } from "../../store/features/apiSlice";
 import "./ListingResults.css"
@@ -12,9 +12,7 @@ function ListingResults(){
   if (isSuccess) {
     for (const listing of data) {
       const component = (
-        <Link to={`/listing/${listing?.id}`}>
-          <ListingResult listing={listing}/>
-        </Link>
+        <ListingResult listing={listing}/>
       )
       results.push(component)
     }
