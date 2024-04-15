@@ -5,7 +5,8 @@ import SingleListing from './Pages/Listings/SingleListing'
 import Navigation from './components/Navigation/Navigation'
 import Footer from './components/Footer/Footer'
 import Admin from './Pages/Admin/Admin'
-import ListingForm from './Pages/Admin/Listing/ListingForm'
+import AddListingFormWrapper from './components/Forms/Listing/AddListingFormWrapper/AddListingFormWrapper'
+import EditListingFormWrapper from './components/Forms/Listing/EditListingFormWrapper/EditListingFormWrapper'
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
         <Route path={"/listing"} element={<ListingResults/>} />
         <Route path={"/listing/:id"} element={<SingleListing />}/>
         <Route path={"/admin"} element={<Admin />} />
-        <Route path={"/admin/add"} element={<ListingForm />} />
+        <Route path={"/admin/add"} element={<AddListingFormWrapper />} />
+        <Route path={"/admin/update/:id"} element={ <EditListingFormWrapper/> } />
       </Routes>
       <Footer />
     </>

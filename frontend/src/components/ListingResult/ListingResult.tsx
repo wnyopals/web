@@ -1,25 +1,26 @@
-import "./ListingResult.css"
+import "./ListingResult.css";
 
-import { listing } from "../../../types/Listing"
+import { listing } from "../../../types/Listing";
 import { useDeleteListingMutation } from "../../store/features/apiSlice";
+import { Link } from "react-router-dom";
 
-const ListingResult: React.FC<{listing: listing}> = ({listing}) => {
-  
+const ListingResult: React.FC<{ listing: listing }> = ({ listing }) => {
   const [
     deleteListing,
     {
       isLoading,
-      isSuccess,
+      // isSuccess,
       isError,
-    }
-  ] = useDeleteListingMutation(listing.id);
-  
-  function onDeleteButtonClick(e) {
+    },
+  ] = useDeleteListingMutation();
+
+  function onDeleteButtonClick(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
     e.preventDefault();
-    console.log(listing)
-    deleteListing(listing.id);
+    deleteListing(listing.id ?? -1);
   }
-  
+
   // let StatusComponent;
 
   if (isLoading) {
@@ -33,15 +34,23 @@ const ListingResult: React.FC<{listing: listing}> = ({listing}) => {
       <img />
       <h3 className="title">{listing?.title}</h3>
       <p className="description">{listing?.description}</p>
-      <span className="quick-info">{listing?.length}x{listing?.width}x{listing?.height}</span>
+      <span className="quick-info">
+        {listing?.length}x{listing?.width}x{listing?.height}
+      </span>
       <br></br>
       <span className="price">{listing?.price}</span>
-      <br/>
-      <button>Edit listing</button>
-      <button onClick={onDeleteButtonClick}>Delete Listing</button>
+      <br />
+      <div>
+        <Link to={`/listing/${listing?.id}`}>Visit this one</Link>
+        <br/>
+        <button onClick={onDeleteButtonClick}>Delete Listing</button>
+        <br/>
+        <Link to={`/admin/update/${listing?.id}`}>Update Listing</Link>
+        <br/>
+      </div>
       {/* <StatusComponent /> */}
     </div>
-  )
-}
+  );
+};
 
-export default ListingResult
+export default ListingResult;
