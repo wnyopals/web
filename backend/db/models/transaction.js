@@ -11,10 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Transaction.hasMany(models.TransactionStatus, {
+        foreignKey: "transactionStatus"
+      })
     }
   }
   Transaction.init({
-    status: DataTypes.STRING,
+    transactionStatus: DataTypes.INTEGER,
     listingId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     email: DataTypes.STRING,
