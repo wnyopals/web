@@ -9,14 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      status: {
-        type: Sequelize.STRING
+      transactionStatus: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "TransactionStatuses"
+        }
       },
       listingId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Listings"
+        }
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users"
+        }
       },
       email: {
         type: Sequelize.STRING
