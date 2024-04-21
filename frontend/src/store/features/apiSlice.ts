@@ -6,10 +6,10 @@ import { Attribute } from "../../../types/Attributes"
 export const listingsApi = createApi({
     reducerPath: "listingsAPI",
     baseQuery: fetchBaseQuery({
-        // baseUrl: "http://localhost:8080/api"
-        baseUrl: "https://web-main.onrender.com/api"
+        baseUrl: "http://localhost:8080/api"
+        // baseUrl: "https://web-main.onrender.com/api"
     }),
-    tagTypes: ['Listing', 'Attributes'],
+    tagTypes: ['Listing', 'Attributes', 'Authentication', 'User'],
     endpoints: (builder) => ({
         getAllListings: builder.query<listing[], void>({
             query: () => "listing",
@@ -88,7 +88,16 @@ export const listingsApi = createApi({
             query: () => `attributes/patterns`,
             providesTags: ['Attributes']
         }),
+        /**
+         * Get user
+         * Update User
+         * Delete User Account
+         */
 
+        /**
+         * post username/email and password to receive both an access token and refresh token. refresh token
+         *      should be put in localstorage or cookies?
+         */
     })
 })
 

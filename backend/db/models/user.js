@@ -8,10 +8,16 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+
+    toSafeObject() {
+      const {email, id} = this;
+      return {email, id}
+    }
+
     static associate(models) {
       // define association here
       User.belongsToMany(models.Permission, {
-        through: "PermissionUserJoin",
+        through: "PermissionsUserJoin",
         foreignKey: "userId",
         otherKey: "permissionId"
       })
