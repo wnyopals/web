@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       Transaction.hasMany(models.TransactionStatus, {
         foreignKey: "transactionStatus"
       })
+      Transaction.belongsTo(models.Listing, {
+        foreignKey: "listingId"
+      })
     }
   }
   Transaction.init({

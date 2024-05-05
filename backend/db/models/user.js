@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
 
     toSafeObject() {
       const {email, id} = this;
+      console.log(email, id)
       return {email, id}
     }
 
@@ -19,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Permission, {
         through: "PermissionsUserJoin",
         foreignKey: "userId",
-        otherKey: "permissionId"
+        otherKey: "permissionId",
       })
 
       User.hasMany(models.Inquerry, {
@@ -72,7 +73,7 @@ module.exports = (sequelize, DataTypes) => {
          * query faster
          */
         currentUser: {
-          attributes: { exclude: ["hashedPassword"] },
+          attributes: { exclude: ["password"] },
         },
         loginUser: {
           attributes: {},
@@ -85,10 +86,9 @@ module.exports = (sequelize, DataTypes) => {
         //the database this will always be included as long as I use the model
         attributes: {
           exclude: [
-            "hashedPassword",
+            "password",
             "email",
             "role",
-            "membership",
             "createdAt",
             "updatedAt",
           ],

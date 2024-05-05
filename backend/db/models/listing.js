@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "type"
       })
 
+      Listing.hasMany(models.Transaction, {
+        foreignKey: "listingId"
+      })
+
       //many to many
       Listing.belongsToMany(models.Color, {
         through: "ColorListingJoin",
