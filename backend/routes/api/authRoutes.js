@@ -19,12 +19,13 @@ router.post(
     const { credential, password } = req.body;
     console.log("Credential", credential);
     //find user
-    const user = await db.User.findOne({
+    const user = await db.User.scope("loginUser").findOne({
       where: {
         email: credential,
       },
     });
     //if the user is found, make sure the password is right
+    console.log(user.password)
     if (user && bcrypt.compareSync(password, user.password)) {
       // send back the refresh and response tokens
       console.log(user)

@@ -22,6 +22,9 @@ const queryArgs = {
       through: { attributes: [] },
       attributes: ["id", "name", "description"],
     },
+    {
+      model: db.Transaction,
+    },
     // {model: db.Link}
   ],
   attributes: {
@@ -70,7 +73,6 @@ router.get(
   "/:id",
   expressAsyncHandler(async (req, res, next) => {
     const { id } = req.params;
-
     try {
       if (id) {
         const listing = await db.Listing.findByPk(id, {
