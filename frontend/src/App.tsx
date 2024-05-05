@@ -7,6 +7,8 @@ import Footer from './components/Footer/Footer'
 import Admin from './Pages/Admin/Admin'
 import AddListingFormWrapper from './components/Forms/Listing/AddListingFormWrapper/AddListingFormWrapper'
 import EditListingFormWrapper from './components/Forms/Listing/EditListingFormWrapper/EditListingFormWrapper'
+import SignInForm from './Pages/UserSignIn/SignInForm'
+import SignUpForm from './Pages/UserSignUp/SignUpForm'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path={"/admin"} element={<Admin />} />
         <Route path={"/admin/add"} element={<AddListingFormWrapper />} />
         <Route path={"/admin/update/:id"} element={ <EditListingFormWrapper/> } />
+        <Route path="/sign-in" element={<SignInForm />}/>
+        <Route path="/sign-up" element={<SignUpForm />}/>
       </Routes>
       <Footer />
     </>
