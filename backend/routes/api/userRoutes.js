@@ -43,8 +43,6 @@ router.delete("/:id", validateAccessToken, expressAsyncHandler(async (req, res, 
     try{
         const user = req.user
         const userId = parseInt(req.params.id)
-
-        console.log(user)
         
         if (!user) throw new Error("User not found")
         if (user.id === userId) {

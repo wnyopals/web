@@ -27,7 +27,6 @@ router.post(
     // console.log(user.password)
     if (user && bcrypt.compareSync(password, user.password)) {
       // send back the refresh and response tokens
-      console.log(user)
       setTokens(res, user);
     } else {
       const err = new Error("Login failed");

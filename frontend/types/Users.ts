@@ -38,6 +38,7 @@ export type SignUpRequest = {
     addressCity: string | null;
     addressStateProvince: string | null;
     addressPostalCode: number | null;
+    password:string;
 }
 
 export type SignInRequest = {

@@ -95,9 +95,9 @@ export const listingsApi = createApi({
       providesTags: ["User"],
     }),
     //sign up
-    addUser: builder.mutation<SignUpRequest, CurrentUser>({
+    addUser: builder.mutation<CurrentUser, SignUpRequest>({
       query: (newUser) => ({
-        url: "/auth",
+        url: "/auth/signup",
         method: "POST",
         body: newUser,
       }),
@@ -159,4 +159,5 @@ export const {
   useUpdateListingMutation,
   useDeleteListingMutation,
   useSignInUserMutation,
+  useAddUserMutation
 } = listingsApi;
