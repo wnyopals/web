@@ -25,27 +25,32 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: "createAttribute",
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: "createAttribute",
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: "updateAttribute",
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
         name: "deleteAttribute",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        name: "adminDashboard",
+        name: "addPermission",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "removePermission",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "readPermissions",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "adminDashboardRead",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "adminDashboardWrite",
         createdAt: new Date(),
         updatedAt: new Date()
       }

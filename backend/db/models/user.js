@@ -8,12 +8,20 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+
+    toSafeObject() {
+      const {email, id} = this;
+      console.log(email, id)
+      return {email, id}
+    }
+
     static associate(models) {
       // define association here
       User.belongsToMany(models.Permission, {
-        through: "PermissionUserJoin",
+        through: "PermissionsUserJoin",
         foreignKey: "userId",
-        otherKey: "permissionId"
+        otherKey: "permissionId",
+        onDelete: "CASCADE",
       })
 
       User.hasMany(models.Inquerry, {
@@ -66,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
          * query faster
          */
         currentUser: {
-          attributes: { exclude: ["hashedPassword"] },
+          attributes: { exclude: ["password"] },
         },
         loginUser: {
           attributes: {},
@@ -79,10 +87,9 @@ module.exports = (sequelize, DataTypes) => {
         //the database this will always be included as long as I use the model
         attributes: {
           exclude: [
-            "hashedPassword",
+            "password",
             "email",
             "role",
-            "membership",
             "createdAt",
             "updatedAt",
           ],
