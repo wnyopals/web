@@ -9,13 +9,13 @@ import {
 } from "../../../types/Users";
 import { Attribute } from "../../../types/Attributes";
 
-import { setAuthToken } from "../auth";
+import { setAuthToken, setUser } from "../auth";
 
 export const listingsApi = createApi({
   reducerPath: "listingsAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api",
-    // baseUrl: "https://web-main.onrender.com/api"
+    // baseUrl: "http://localhost:8080/api",
+    baseUrl: "https://web-main.onrender.com/api"
   }),
   tagTypes: ["Listing", "Attributes", "Authentication", "User"],
   endpoints: (builder) => ({
@@ -130,8 +130,10 @@ export const listingsApi = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(setAuthToken(data.accessToken));
+          dispatch(setUser(data.user));
         } catch(error) {
           dispatch(setAuthToken(null));
+          dispatch(setUser(null));
         }
       },
     }),
