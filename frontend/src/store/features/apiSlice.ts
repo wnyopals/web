@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { listing, listingRequest } from "../../../types/Listing";
+import { successAuth } from "../../../types/Users";
 import {
   CurrentUser,
   SignInRequest,
@@ -119,16 +120,16 @@ export const listingsApi = createApi({
       }),
     }),
     //sign in
-    signInUser: builder.query<CurrentUser, SignInRequest>({
+    signInUser: builder.mutation<successAuth, SignInRequest>({
       query: (credentials) => ({
         url: '/auth',
         method: 'POST',
         body: credentials,
       }),
-      onQueryStarted: async (credentials, { dispatch, queryFulfilled }) => {
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled;
-          dispatch(setAuthToken(data.body.token));
+          dispatch(setAuthToken(data.accessToken));
         } catch(error) {
           dispatch(setAuthToken(null));
         }
@@ -157,4 +158,5 @@ export const {
   useAddListingMutation,
   useUpdateListingMutation,
   useDeleteListingMutation,
+  useSignInUserMutation,
 } = listingsApi;

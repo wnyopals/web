@@ -21,6 +21,13 @@ export type User = {
     firstName: string;
     lastName: string;
 }
+export type successAuth = {
+    user: {
+        email: string;
+        id: number;
+    }
+    accessToken: string;
+}
 
 export type SignUpRequest = {
     email: string;
