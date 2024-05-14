@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class PermissionsUserJoin extends Model {
     /**
@@ -13,12 +11,29 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  PermissionsUserJoin.init({
-    userId: DataTypes.INTEGER,
-    permissionId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'PermissionsUserJoin',
-  });
+  PermissionsUserJoin.init(
+    {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+        },
+        onDelete: "CASCADE",
+      },
+      permissionId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Permissions",
+        },
+        onDelete: "CASCADE"
+      },
+    },
+    {
+      sequelize,
+      modelName: "PermissionsUserJoin",
+    }
+  );
   return PermissionsUserJoin;
 };

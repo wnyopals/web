@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         through: "PermissionsUserJoin",
         foreignKey: "userId",
         otherKey: "permissionId",
+        onDelete: "CASCADE",
       })
 
       User.hasMany(models.Inquerry, {

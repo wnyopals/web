@@ -12,14 +12,16 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Users"
-        }
+          model: "Users",
+        },
+        onDelete: 'CASCADE'
       },
       permissionId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Permissions"
-        }
+          model: "Permissions",
+        },
+        onDelete: "CASCADE"
       },
       createdAt: {
         allowNull: false,

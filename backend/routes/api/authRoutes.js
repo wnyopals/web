@@ -17,7 +17,6 @@ router.post(
   expressAsyncHandler(async (req, res, next) => {
     //Destructure response
     const { credential, password } = req.body;
-    console.log("Credential", credential);
     //find user
     const user = await db.User.scope("loginUser").findOne({
       where: {
@@ -25,7 +24,7 @@ router.post(
       },
     });
     //if the user is found, make sure the password is right
-    console.log(user.password)
+    // console.log(user.password)
     if (user && bcrypt.compareSync(password, user.password)) {
       // send back the refresh and response tokens
       console.log(user)

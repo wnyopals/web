@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const expressAsyncHandler = require("express-async-handler");
 const db = require("../../db/models");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 const { validateAccessToken } = require("../../utils/auth")
 
 // Get user safe object
@@ -49,12 +49,17 @@ router.delete("/:id", validateAccessToken, expressAsyncHandler(async (req, res, 
         if (!user) throw new Error("User not found")
         if (user.id === userId) {
             try{
-                const userToDestroy = await db.User.findOne({
+                // const userToDestroy = await db.User.findOne({
+                //     where: {
+                //         id: userId
+                //     }
+                // })
+
+                await db.User.destroy({
                     where: {
                         id: userId
                     }
-                })
-                await userToDestroy.destroy();
+                });
                 res.json({
                     message: "User deleted successfully"
                 })
