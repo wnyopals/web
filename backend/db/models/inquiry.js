@@ -12,11 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Inquiry.hasMany(models.Message, {
-        foreignKey: "inquiryId"
+        foreignKey: "inquiryId",
       })
 
       Inquiry.belongsTo(models.User, {
-        foreignKey: "userId"
+        foreignKey: "userId",
+      })
+
+      Inquiry.belongsTo(models.Listing, {
+        foreignKey: "listingId"
       })
     }
   }
@@ -26,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
     phoneNumber: DataTypes.STRING,
     subject: DataTypes.STRING,
     subject: DataTypes.STRING,
-    body: DataTypes.STRING,
     listingId: DataTypes.INTEGER
   }, {
     sequelize,
