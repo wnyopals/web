@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       })
 
-      User.hasMany(models.Inquerry, {
+      User.hasMany(models.Inquiry, {
         foreignKey: "userId"
       });
 
