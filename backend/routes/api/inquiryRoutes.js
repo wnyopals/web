@@ -1,16 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const expressAsyncHandler = require("express-async-handler");
-// const db = require("../../db/models");
-const Inquiry = require("../../db/models/Inquiry");
-const Message = require("../../db/models/message");
+const db = require("../../db/models");
 const { Op, where } = require("sequelize");
 const { validateAccessToken } = require("../../utils/auth");
 
 router.get(
   "/",
   expressAsyncHandler(async (req, res, next) => {
-    const inquiries = await Inquiry.findAll();
+    const inquiries = await db.Inquiry.findAll({
+      include: [
+        {model: db.Listing},
+        {model: db.Message, attributes: ["id", "message", "userId"]}
+      ]
+    });
     res.json(inquiries);
   })
 );
@@ -18,7 +21,12 @@ router.get(
 router.get(
   "/:id",
   expressAsyncHandler(async (req, res, next) => {
-    const inquiry = await Inquiry.findByPk(parseInt(req.params.id));
+    const inquiry = await db.Inquiry.findByPk(parseInt(req.params.id), {
+      include: [
+        {model: db.Listing},
+        {model: db.Message, attributes: ["id", "message", "userId"]}
+      ]
+    });
     res.json(inquiry);
   })
 );
@@ -29,7 +37,7 @@ router.post(
     const { email, phoneNumber, subject, listingId, message } = req.body;
 
     try {
-      const inquiry = await Inquiry.create({
+      const inquiry = await db.Inquiry.create({
         email,
         phoneNumber,
         subject,
@@ -38,12 +46,12 @@ router.post(
 
       if (!inquiry) throw new Error("Unable to create inquiry");
 
-      const message = await Message.create({
+      const newMessage = await db.Message.create({
         message,
         inquiryId: inquiry.id,
       });
 
-      if (!message) throw new Error("Unable to add message to created inquiry");
+      if (!newMessage) throw new Error("Unable to add message to created inquiry");
 
       res.json(inquiry);
     } catch (e) {
@@ -58,7 +66,7 @@ router.put(
     const { email, phoneNumber, subject, listingId } = req.body;
 
     try {
-      const inquiry = await Inquiry.findByPk(parseInt(req.params.id));
+      const inquiry = await db.Inquiry.findByPk(parseInt(req.params.id));
       if (!inquiry) throw new Error("Cannot find inquiry to update");
       await inquiry.update({
         email,
@@ -66,7 +74,7 @@ router.put(
         subject,
         listingId,
       });
-      const updatedInquiry = await Inquiry.findByPk(parseInt(req.params.id));
+      const updatedInquiry = await db.Inquiry.findByPk(parseInt(req.params.id));
       res.json(updatedInquiry);
     } catch (e) {
       next(e);
@@ -78,7 +86,7 @@ router.delete(
   "/:id",
   expressAsyncHandler(async (req, res, next) => {
     try {
-      const inquiry = await Inquiry.findByPk(parseInt(req.params.id));
+      const inquiry = await db.Inquiry.findByPk(parseInt(req.params.id));
       if (!inquiry) throw new Error("Cannot find inquiry to delete");
       await inquiry.destroy();
       res.json({ message: "inquiry deleted" });
