@@ -28,9 +28,6 @@ module.exports = {
       subject: {
         type: Sequelize.STRING,
       },
-      body: {
-        type: Sequelize.STRING,
-      },
       listingId: {
         type: Sequelize.INTEGER,
         references: {
