@@ -25,7 +25,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "Users"
-        }
+        },
+        onDelete: "SET NULL"
       },
       email: {
         type: Sequelize.STRING
