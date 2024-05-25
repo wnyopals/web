@@ -137,7 +137,8 @@ export const listingsApi = createApi({
           dispatch(setUser(data.user));
         } catch (error) {
           dispatch(setAuthToken(null));
-          dispatch(setUser(null));
+          dispatch(setUser({}));
+          alert("Sign in failed")
         }
       },
     }),
