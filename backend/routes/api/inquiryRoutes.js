@@ -14,6 +14,7 @@ router.get(
         { model: db.Listing, ...listingQueryArgs },
         { model: db.Message, attributes: ["id", "message", "userId"] },
       ],
+      order: [["createdAt", "DESC"]]
     });
     res.json(inquiries);
   })
