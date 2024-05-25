@@ -10,7 +10,7 @@ import {
 import { Attribute } from "../../../types/Attributes";
 
 import { setAuthToken, setUser } from "../auth";
-import { InquiryResponse } from "../../../types/Inquerries";
+import { InquiryRequest, InquiryResponse } from "../../../types/Inquerries";
 
 export const listingsApi = createApi({
   reducerPath: "listingsAPI",
@@ -148,6 +148,14 @@ export const listingsApi = createApi({
     getInquiry: builder.query<InquiryResponse, number>({
       query: (id) => `/inquiries/${id}`,
       providesTags: ["Inquiries"]
+    }),
+    submitInquiry: builder.mutation<InquiryResponse, InquiryRequest>({
+      query: (inquiry) => ({
+        url: "/inquiries",
+        method: "POST",
+        body: inquiry
+      }),
+      invalidatesTags: ["Inquiries"]
     })
   }),
 });
@@ -171,5 +179,6 @@ export const {
   useSignInUserMutation,
   useAddUserMutation,
   useGetInquiriesQuery,
-  useGetInquiryQuery
+  useGetInquiryQuery,
+  useSubmitInquiryMutation
 } = listingsApi;
