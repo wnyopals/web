@@ -7,7 +7,7 @@ import { setAuthToken, setUser } from "../../store/auth";
 const Navigation = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
-  async function signOut(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  async function signOut(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
     await dispatch(setUser({}));
     await dispatch(setAuthToken(""));
@@ -36,21 +36,19 @@ const Navigation = () => {
           WNYOpals
         </NavLink>
       </div>
-      <div className="navigation">
+      <div className="user-navigation">
         <NavLink className={"navlink"} to={"/about"}>
-          About{" "}
+          About
         </NavLink>
         <NavLink className={"navlink"} to={"/listing"}>
-          Shop{" "}
+          Shop
         </NavLink>
         <NavLink className={"navlink"} to={"/education"}>
-          Education{" "}
+          Education
         </NavLink>
         <NavLink className={"navlink"} to={"/experience"}>
-          Experience{" "}
+          Experience
         </NavLink>
-      </div>
-      <div className="user-navigation">
         {auth}
       </div>
     </nav>

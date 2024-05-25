@@ -1,3 +1,8 @@
+body{
+    margin: 0 auto;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 .header > img{
     border: solid black 1px;
     height: 250px;
