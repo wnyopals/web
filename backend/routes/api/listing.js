@@ -3,44 +3,8 @@ const router = express.Router();
 const expressAsyncHandler = require("express-async-handler");
 const db = require("../../db/models");
 const { Op } = require("sequelize");
+const {listingQueryArgs} = require("../../utils/quryArgs")
 
-const queryArgs = {
-  include: [
-    { model: db.OpalType, attributes: ["id", "name"] },
-    { model: db.Cut, attributes: ["id", "name"] },
-    { model: db.Dome, attributes: ["id", "name"] },
-    { model: db.Origin, attributes: ["id", "name"] },
-    { model: db.BodyTone, attributes: ["id", "name"] },
-    { model: db.Brightness, attributes: ["id", "name"] },
-    {
-      model: db.Color,
-      through: { attributes: [] },
-      attributes: ["id", "name", "description"],
-    },
-    {
-      model: db.Pattern,
-      through: { attributes: [] },
-      attributes: ["id", "name", "description"],
-    },
-    {
-      model: db.Transaction,
-    },
-    // {model: db.Link}
-  ],
-  attributes: {
-    exclude: [
-      "bodyTone",
-      "cut",
-      "dome",
-      "origin",
-      "bodyTone",
-      "brightness",
-      "type",
-      "createdAt",
-      "updatedAt",
-    ],
-  },
-};
 
 router.get(
   "/",
@@ -55,7 +19,7 @@ router.get(
               [Op.like]: `%${title}%`,
             },
           },
-          ...queryArgs,
+          ...listingQueryArgs,
         });
         if (!allListings) throw new Error("Listing not found");
         res.json(allListings);
@@ -76,7 +40,7 @@ router.get(
     try {
       if (id) {
         const listing = await db.Listing.findByPk(id, {
-          ...queryArgs,
+          ...listingQueryArgs,
         });
         if (!listing) throw new Error("Listing not found");
         res.json(listing);
@@ -165,7 +129,7 @@ router.post(
     await newListing.setColors(colors);
     await newListing.setPatterns(patterns);
 
-    const createdListing = await db.Listing.findByPk(newListing?.id, queryArgs);
+    const createdListing = await db.Listing.findByPk(newListing?.id, listingQueryArgs);
 
     res.json(createdListing);
   })
@@ -195,7 +159,7 @@ router.put(
     } = req.body;
     console.log()
       try {
-        const listing = await db.Listing.findByPk(parseInt(req.params.id), queryArgs)
+        const listing = await db.Listing.findByPk(parseInt(req.params.id), listingQueryArgs)
         //operations for figuring out what colors to add/remove
         const colorsToRemove = listing.Colors.filter(color => !colors.includes(color.id)).map(colorObj => colorObj.id)
         const colorsToAdd = colors.filter(colorId => !listing.Colors.some(color => color.id === colorId))
@@ -223,7 +187,7 @@ router.put(
           origin,
           quantity,
         })
-        const updatedListing = await db.Listing.findByPk(parseInt(req.params.id), queryArgs);
+        const updatedListing = await db.Listing.findByPk(parseInt(req.params.id), listingQueryArgs);
         res.json(updatedListing)
       } catch( e ) {
         next(e)
@@ -252,7 +216,7 @@ router.delete(
   expressAsyncHandler(async (req, res, next) => {
     console.log(req.params);
     try {
-      const listing = await db.Listing.findByPk(parseInt(req.params.id), queryArgs);
+      const listing = await db.Listing.findByPk(parseInt(req.params.id), listingQueryArgs);
       const colors = listing.Colors.map(color => color.id);
       const patterns = listing.Patterns.map(pattern => pattern.id);
       if (!listing)
