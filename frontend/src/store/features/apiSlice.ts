@@ -10,14 +10,15 @@ import {
 import { Attribute } from "../../../types/Attributes";
 
 import { setAuthToken, setUser } from "../auth";
+import { InquiryRequest, InquiryResponse } from "../../../types/Inquerries";
 
 export const listingsApi = createApi({
   reducerPath: "listingsAPI",
   baseQuery: fetchBaseQuery({
     // baseUrl: "http://localhost:8080/api",
-    baseUrl: "https://web-main.onrender.com/api"
+    baseUrl: "https://web-main.onrender.com/api",
   }),
-  tagTypes: ["Listing", "Attributes", "Authentication", "User"],
+  tagTypes: ["Listing", "Attributes", "Authentication", "User", "Inquiries"],
   endpoints: (builder) => ({
     getAllListings: builder.query<listing[], void>({
       query: () => "listing",
@@ -54,6 +55,7 @@ export const listingsApi = createApi({
       }),
       invalidatesTags: ["Listing"],
     }),
+    //
     getBrightnesses: builder.query<Attribute[], void>({
       query: () => `attributes/brightnesses`,
       providesTags: ["Attributes"],
@@ -90,6 +92,7 @@ export const listingsApi = createApi({
       query: () => `attributes/patterns`,
       providesTags: ["Attributes"],
     }),
+    //
     getUser: builder.query<number, number>({
       query: (id) => `users/${id}`,
       providesTags: ["User"],
@@ -110,6 +113,7 @@ export const listingsApi = createApi({
         method: "PUT",
         body: currentUser,
       }),
+      invalidatesTags: ["User"]
     }),
     //sets the user to "deleted"
     deleteUser: builder.mutation<number, number>({
@@ -122,8 +126,8 @@ export const listingsApi = createApi({
     //sign in
     signInUser: builder.mutation<successAuth, SignInRequest>({
       query: (credentials) => ({
-        url: '/auth',
-        method: 'POST',
+        url: "/auth",
+        method: "POST",
         body: credentials,
       }),
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
@@ -131,16 +135,28 @@ export const listingsApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(setAuthToken(data.accessToken));
           dispatch(setUser(data.user));
-        } catch(error) {
+        } catch (error) {
           dispatch(setAuthToken(null));
           dispatch(setUser(null));
         }
       },
     }),
-    /**
-     * post username/email and password to receive both an access token and refresh token. refresh token
-     *      should be put in localstorage or cookies?
-     */
+    getInquiries: builder.query<InquiryResponse [], void>({
+      query: () => `/inquiries`,
+      providesTags: ["Inquiries"]
+    }),
+    getInquiry: builder.query<InquiryResponse, number>({
+      query: (id) => `/inquiries/${id}`,
+      providesTags: ["Inquiries"]
+    }),
+    submitInquiry: builder.mutation<InquiryResponse, InquiryRequest>({
+      query: (inquiry) => ({
+        url: "/inquiries",
+        method: "POST",
+        body: inquiry
+      }),
+      invalidatesTags: ["Inquiries"]
+    })
   }),
 });
 
@@ -161,5 +177,8 @@ export const {
   useUpdateListingMutation,
   useDeleteListingMutation,
   useSignInUserMutation,
-  useAddUserMutation
+  useAddUserMutation,
+  useGetInquiriesQuery,
+  useGetInquiryQuery,
+  useSubmitInquiryMutation
 } = listingsApi;

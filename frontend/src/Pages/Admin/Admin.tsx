@@ -1,13 +1,17 @@
-import AllListings from "./Listing/AllListings"
-
+import AllListings from "./Listing/AllListings";
+import Inquiries from "./Inquiry/Inquiries";
+import "./Admin.css";
 
 const Admin = () => {
   return (
-    <div>
+    <>
       <h1>AdminPage</h1>
-      <AllListings />
-    </div>
-  )
-}
+      <div className="home_container">
+        <Inquiries />
+        <AllListings />
+      </div>
+    </>
+  );
+};
 
-export default Admin
+export default Admin;

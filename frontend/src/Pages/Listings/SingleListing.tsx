@@ -1,37 +1,81 @@
-import { useParams } from "react-router-dom"
-import { useGetListingByIdQuery } from "../../store/features/apiSlice"
-import "./SingleListing.css"
-
+import { useParams } from "react-router-dom";
+import { useGetListingByIdQuery, useSubmitInquiryMutation } from "../../store/features/apiSlice";
+import "./SingleListing.css";
+import { useEffect, useState } from "react";
 
 const SingleListing = () => {
   const params = useParams();
-  const { status, data } = useGetListingByIdQuery(parseInt(params.id || "0"))
+  const { status, data } = useGetListingByIdQuery(parseInt(params.id || "0"));
 
-  console.log("Status: ", status);
-  console.log("Data: ", data);
-  console.log("Listing Id: ", params.id)
+  const [submitInquiry, {isSuccess, isError}] = useSubmitInquiryMutation()
+
+  const [email, setEmail] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [subject, setSubject] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
   let content;
+
+  async function onInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    await submitInquiry({
+      email,
+      phoneNumber,
+      subject,
+      message,
+      listingId: parseInt(params?.id || "0")
+    })
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      setEmail("");
+      setPhoneNumber("");
+      setSubject("");
+      setMessage("")
+      alert("Inquiry Submitted! Expect a response within the next few days.")
+    } else if (isError) {
+      alert("Please try resubmitting your message. If this continues, contact directly at our email.")
+    }
+    return () => {
+      setEmail("");
+      setPhoneNumber("");
+      setSubject("");
+      setMessage("")
+    }
+  }, [isSuccess, isError])
 
   if (status === "fulfilled") {
     content = (
       <>
-        <li className="information-item"><h3>Body Tone: {data?.BodyTone?.name}</h3></li>
-        <li className="information-item"><h3>Brightness: {data?.Brightness?.name}</h3></li>
-        <li className="information-item"><h3>Cut: {data?.Cut?.name}</h3></li>
-        <li className="information-item"><h3>Dome: {data?.Dome?.name}</h3></li>
-        <li className="information-item"><h3>Opal Type: {data?.OpalType?.name}</h3></li>
-        <li className="information-item"><h3>Origin: {data?.Origin?.name}</h3></li>
+        <li className="information-item">
+          <h3>Body Tone: {data?.BodyTone?.name}</h3>
+        </li>
+        <li className="information-item">
+          <h3>Brightness: {data?.Brightness?.name}</h3>
+        </li>
+        <li className="information-item">
+          <h3>Cut: {data?.Cut?.name}</h3>
+        </li>
+        <li className="information-item">
+          <h3>Dome: {data?.Dome?.name}</h3>
+        </li>
+        <li className="information-item">
+          <h3>Opal Type: {data?.OpalType?.name}</h3>
+        </li>
+        <li className="information-item">
+          <h3>Origin: {data?.Origin?.name}</h3>
+        </li>
       </>
-    )
+    );
   } else if (status === "pending") {
-    content = <h1>Loading</h1>
+    content = <h1>Loading</h1>;
   } else if (status === "rejected") {
     content = (
       <div>
         <h1>Error</h1>
       </div>
-    )
+    );
   }
 
   return (
@@ -39,12 +83,14 @@ const SingleListing = () => {
       <div className="showcase">
         <div className="basic-info">
           <div className="photos">
-            <img/>
+            <img />
           </div>
           <div className="showcase-information">
             <h2 className="title">{data?.title}</h2>
             <p className="description">{data?.description}</p>
-            <span>{data?.length} x {data?.width} x {data?.height}</span>
+            <span>
+              {data?.length} x {data?.width} x {data?.height}
+            </span>
           </div>
         </div>
         <div className="purchase-info">
@@ -56,12 +102,32 @@ const SingleListing = () => {
       </div>
       <div className="information">
         <h3>Information</h3>
-        <ul className="information-list">
-          {content}
-        </ul>
+        <ul className="information-list">{content}</ul>
+      </div>
+      <div>
+        <form onSubmit={onInquirySubmit}>
+          <h1>Inquire about this listing</h1>
+          <div>
+            <label>email</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div>
+            <label>Phone Number</label>
+            <input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+          </div>
+          <div>
+            <label>Subject</label>
+            <input value={subject} onChange={(e) => setSubject(e.target.value)} />
+          </div>
+          <div>
+            <label>Message</label>
+            <input value={message} onChange={(e) => setMessage(e.target.value)} />
+          </div>
+          <input type="submit" value="Submit Inquiry"/>
+        </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SingleListing
+export default SingleListing;

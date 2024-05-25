@@ -1,5 +1,5 @@
 import {Transaction} from "./Transactions"
-import {Inquerries} from "./Inquerries"
+import {InquiryResponse} from "./Inquerries"
 
 export type CurrentUser = {
     id?: number;
@@ -11,7 +11,7 @@ export type CurrentUser = {
     addressCity: string | null;
     addressStateProvince: string | null;
     addressPostalCode: number | null;
-    inquerries: Inquerries [],
+    inquerries: InquiryResponse [],
     transactions: Transaction []
 }
 

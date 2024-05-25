@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import ListingResult from "../../../components/ListingResult/ListingResult";
 import { useGetAllListingsQuery } from "../../../store/features/apiSlice";
 
@@ -21,8 +22,7 @@ const AllListings: React.FC = () => {
   return (
     <div>
       <div>
-        <h1>Welcome!</h1>
-        <button>Add a listing</button>
+        <NavLink to={"/admin/add"}>Add a Listing</NavLink>
         <button>Find a listing</button>
       </div>
       {component}

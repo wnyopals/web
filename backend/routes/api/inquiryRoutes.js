@@ -4,15 +4,17 @@ const expressAsyncHandler = require("express-async-handler");
 const db = require("../../db/models");
 const { Op, where } = require("sequelize");
 const { validateAccessToken } = require("../../utils/auth");
+const {listingQueryArgs} = require("../../utils/quryArgs")
 
 router.get(
   "/",
   expressAsyncHandler(async (req, res, next) => {
     const inquiries = await db.Inquiry.findAll({
       include: [
-        {model: db.Listing},
-        {model: db.Message, attributes: ["id", "message", "userId"]}
-      ]
+        { model: db.Listing, ...listingQueryArgs },
+        { model: db.Message, attributes: ["id", "message", "userId"] },
+      ],
+      order: [["createdAt", "DESC"]]
     });
     res.json(inquiries);
   })
@@ -23,9 +25,12 @@ router.get(
   expressAsyncHandler(async (req, res, next) => {
     const inquiry = await db.Inquiry.findByPk(parseInt(req.params.id), {
       include: [
-        {model: db.Listing},
-        {model: db.Message, attributes: ["id", "message", "userId"]}
-      ]
+        {
+          model: db.Listing,
+          ...listingQueryArgs
+        },
+        { model: db.Message, attributes: ["id", "message", "userId"] },
+      ],
     });
     res.json(inquiry);
   })
@@ -51,7 +56,8 @@ router.post(
         inquiryId: inquiry.id,
       });
 
-      if (!newMessage) throw new Error("Unable to add message to created inquiry");
+      if (!newMessage)
+        throw new Error("Unable to add message to created inquiry");
 
       res.json(inquiry);
     } catch (e) {
