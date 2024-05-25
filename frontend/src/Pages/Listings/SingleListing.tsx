@@ -1,13 +1,21 @@
 import { useParams } from "react-router-dom";
-import { useGetListingByIdQuery, useSubmitInquiryMutation } from "../../store/features/apiSlice";
+import {
+  useGetListingByIdQuery,
+  useSubmitInquiryMutation,
+} from "../../store/features/apiSlice";
 import "./SingleListing.css";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem, removeItem } from "../../store/cart";
+import { RootState } from "../../store";
 
 const SingleListing = () => {
   const params = useParams();
   const { status, data } = useGetListingByIdQuery(parseInt(params.id || "0"));
+  const [submitInquiry, { isSuccess, isError }] = useSubmitInquiryMutation();
+  const cartState = useSelector((state: RootState) => state.cart.cart);
 
-  const [submitInquiry, {isSuccess, isError}] = useSubmitInquiryMutation()
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -16,6 +24,23 @@ const SingleListing = () => {
 
   let content;
 
+  async function onRemoveFromCartClick(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    e.preventDefault();
+    console.log(data)
+    await dispatch(removeItem(data));
+    alert("Item removed from cart");
+  }
+
+  async function onAddToCartClick(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    e.preventDefault();
+    await dispatch(addItem(data));
+    alert("Item added to cart");
+  }
+
   async function onInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await submitInquiry({
@@ -23,8 +48,8 @@ const SingleListing = () => {
       phoneNumber,
       subject,
       message,
-      listingId: parseInt(params?.id || "0")
-    })
+      listingId: parseInt(params?.id || "0"),
+    });
   }
 
   useEffect(() => {
@@ -32,18 +57,20 @@ const SingleListing = () => {
       setEmail("");
       setPhoneNumber("");
       setSubject("");
-      setMessage("")
-      alert("Inquiry Submitted! Expect a response within the next few days.")
+      setMessage("");
+      alert("Inquiry Submitted! Expect a response within the next few days.");
     } else if (isError) {
-      alert("Please try resubmitting your message. If this continues, contact directly at our email.")
+      alert(
+        "Please try resubmitting your message. If this continues, contact directly at our email."
+      );
     }
     return () => {
       setEmail("");
       setPhoneNumber("");
       setSubject("");
-      setMessage("")
-    }
-  }, [isSuccess, isError])
+      setMessage("");
+    };
+  }, [isSuccess, isError]);
 
   if (status === "fulfilled") {
     content = (
@@ -96,7 +123,11 @@ const SingleListing = () => {
         <div className="purchase-info">
           <h2 className="price">${data?.price}</h2>
           <button>Buy Now</button>
-          <button>Add to Cart</button>
+          {!cartState.some((item) => item?.id === data?.id) ? (
+            <button onClick={onAddToCartClick}>Add to Cart</button>
+          ) : (
+            <button onClick={onRemoveFromCartClick}>Remove from Cart</button>
+          )}
           <button>Inquire</button>
         </div>
       </div>
@@ -109,21 +140,34 @@ const SingleListing = () => {
           <h1>Inquire about this listing</h1>
           <div>
             <label>email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div>
             <label>Phone Number</label>
-            <input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+            <input
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
           </div>
           <div>
             <label>Subject</label>
-            <input value={subject} onChange={(e) => setSubject(e.target.value)} />
+            <input
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            />
           </div>
           <div>
             <label>Message</label>
-            <input value={message} onChange={(e) => setMessage(e.target.value)} />
+            <input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
           </div>
-          <input type="submit" value="Submit Inquiry"/>
+          <input type="submit" value="Submit Inquiry" />
         </form>
       </div>
     </div>

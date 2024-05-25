@@ -1,21 +1,36 @@
 nav {
     padding: 1.25rem;
-    width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border: solid black 1px;
-    border-radius: 15px;
+    border-bottom: solid black 1px;
+    align-items: center;
+    background: rgb(2,0,36);
+background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+}
+
+.user-navigation{
+    display: flex;
+    align-items: end;
 }
 
 .navlink{
-    padding: 5px 15px;
+    width: fit-content;
+    padding: 5px;
+    margin: 5px;
     text-decoration: none;
     color: black;
     border: solid black 1px;
+    background-color: rgba(128, 128, 128, 0.5);
+    transition: background-color ease-in 0.25s
+}
+
+.navlink:hover{
+    background-color: rgba(255, 255, 255, 0.75);
 }
 
 .active{
     text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.75);
 }
