@@ -6,6 +6,7 @@ import { setAuthToken, setUser } from "../../store/auth";
 
 const Navigation = () => {
   const user = useSelector((state: RootState) => state.auth.user);
+  const cart = useSelector((state: RootState) => state.cart.cart)
   const dispatch = useDispatch();
   async function signOut(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
@@ -16,7 +17,7 @@ const Navigation = () => {
 
   const auth = user.id ? (
     <div className="user-navigation">
-      <button onClick={signOut}>Sign Out</button>
+      <button className={"navlink"} onClick={signOut}>Sign Out</button>
     </div>
   ) : (
     <div className="user-navigation">
@@ -50,6 +51,9 @@ const Navigation = () => {
           Experience
         </NavLink>
         {auth}
+        <NavLink className={"navlink"} to={"/cart"}>
+          Cart {cart.length}
+        </NavLink>
       </div>
     </nav>
   );

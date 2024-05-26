@@ -9,6 +9,7 @@ import AddListingFormWrapper from './components/Forms/Listing/AddListingFormWrap
 import EditListingFormWrapper from './components/Forms/Listing/EditListingFormWrapper/EditListingFormWrapper'
 import SignInForm from './Pages/UserSignIn/SignInForm'
 import SignUpForm from './Pages/UserSignUp/SignUpForm'
+import Cart from './Pages/Cart/Cart'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path={"/admin/update/:id"} element={ <EditListingFormWrapper/> } />
         <Route path="/sign-in" element={<SignInForm />}/>
         <Route path="/sign-up" element={<SignUpForm />}/>
+        <Route path='/cart' element={<Cart />} />
       </Routes>
       <Footer />
     </>
