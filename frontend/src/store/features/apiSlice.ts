@@ -17,7 +17,7 @@ export const listingsApi = createApi({
   baseQuery: fetchBaseQuery({
     // baseUrl: "http://localhost:8080/api",
     // baseUrl: "https://web-main.onrender.com/api",
-    baseUrl: "https://wnyopals.com/api"
+    baseUrl: "https://web-main-kxmo.onrender.com"
   }),
   tagTypes: ["Listing", "Attributes", "Authentication", "User", "Inquiries"],
   endpoints: (builder) => ({
