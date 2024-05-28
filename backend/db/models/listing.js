@@ -42,11 +42,13 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       Listing.hasMany(models.Transaction, {
-        foreignKey: "listingId"
+        foreignKey: "listingId",
+        onDelete: "CASCADE"
       })
 
       Listing.hasMany(models.Inquiry, {
-        foreignKey: "listingId"
+        foreignKey: "listingId",
+        onDelete: "CASCADE"
       })
 
       //many to many

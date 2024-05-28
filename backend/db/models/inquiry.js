@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Inquiry.hasMany(models.Message, {
         foreignKey: "inquiryId",
       })
+      onDelete: "CASCADE"
 
       Inquiry.belongsTo(models.User, {
         foreignKey: "userId",

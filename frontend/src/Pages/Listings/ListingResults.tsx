@@ -12,7 +12,7 @@ function ListingResults(){
   if (isSuccess) {
     for (const listing of data) {
       const component = (
-        <ListingResult listing={listing}/>
+        <ListingResult admin={false} listing={listing}/>
       )
       results.push(component)
     }

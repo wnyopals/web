@@ -13,7 +13,7 @@ const AllListings: React.FC = () => {
     component = data?.map((listing) => {
       return (
         <>
-          <ListingResult listing={listing} />
+          <ListingResult admin={true} listing={listing} />
         </>
       );
     });

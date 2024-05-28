@@ -16,7 +16,8 @@ export const listingsApi = createApi({
   reducerPath: "listingsAPI",
   baseQuery: fetchBaseQuery({
     // baseUrl: "http://localhost:8080/api",
-    baseUrl: "https://web-main.onrender.com/api",
+    // baseUrl: "https://web-main.onrender.com/api",
+    baseUrl: "https://wnyopals.com/api"
   }),
   tagTypes: ["Listing", "Attributes", "Authentication", "User", "Inquiries"],
   endpoints: (builder) => ({
