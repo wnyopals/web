@@ -1,0 +1,29 @@
+.cart-page {
+    margin: 0 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.cart-item {
+    border: solid black 1px;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 15px 0;
+    width: 75%;
+}
+
+.cart-items {
+    width: 90%;
+}
+
+.cart-overview{
+    margin-top: 65px;
+    padding: 15px;
+    border: solid black 1px;
+    border-radius: 15px;
+    height: fit-content
+}
+
+.cart-overview {
+    width: 25%;
+}

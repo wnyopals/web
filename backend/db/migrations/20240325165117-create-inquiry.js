@@ -13,8 +13,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "Users",
-          onDelete: "SET NULL",
         },
+        onDelete: "SET NULL",
       },
       email: {
         type: Sequelize.STRING,
@@ -33,6 +33,7 @@ module.exports = {
         references: {
           model: "Listings",
         },
+        onDelete: "CASCADE"
       },
       createdAt: {
         allowNull: false,

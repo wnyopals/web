@@ -2,9 +2,9 @@ import "./ListingResult.css";
 
 import { listing } from "../../../types/Listing";
 import { useDeleteListingMutation } from "../../store/features/apiSlice";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-const ListingResult: React.FC<{ listing: listing }> = ({ listing }) => {
+const ListingResult: React.FC<{ listing: listing, admin: boolean }> = ({ listing, admin }) => {
   const [
     deleteListing,
     {
@@ -42,11 +42,8 @@ const ListingResult: React.FC<{ listing: listing }> = ({ listing }) => {
       <br />
       <div>
         <Link to={`/listing/${listing?.id}`}>Visit this one</Link>
-        <br/>
-        <button onClick={onDeleteButtonClick}>Delete Listing</button>
-        <br/>
-        <Link to={`/admin/update/${listing?.id}`}>Update Listing</Link>
-        <br/>
+        {admin && <button onClick={onDeleteButtonClick}>delete</button>}
+        {admin && <NavLink to={`/admin/update/${listing.id ?? -1}`}>update</NavLink>}
       </div>
       {/* <StatusComponent /> */}
     </div>

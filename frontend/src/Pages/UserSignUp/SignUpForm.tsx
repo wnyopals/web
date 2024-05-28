@@ -3,6 +3,8 @@ import { useAddUserMutation } from "../../store/features/apiSlice";
 import { useNavigate } from "react-router-dom";
 import { SignUpRequest } from "../../../types/Users";
 
+import "./SignUpForm.css";
+
 const SignUpForm = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -24,10 +26,10 @@ const SignUpForm = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      alert("Sign in successful! Please sign in")
-      navigate("/sign-in")
+      alert("Sign in successful! Please sign in");
+      navigate("/sign-in");
     }
-  })
+  });
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -46,26 +48,28 @@ const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <h1>Sign Up</h1>
+    <form className="sign-up-form" onSubmit={onSubmit}>
+      <h1 className="header">Sign Up</h1>
 
       {/* Name */}
       <h2>Your Info</h2>
-      <div>
+      <div className="your-info">
         <div>
           <label>
-            <h3>first name</h3>
+            <h3>First Name</h3>
           </label>
           <input
+            className={"input"}
             onChange={(e) => setFirstName(e.target.value)}
             value={firstName}
           />
         </div>
         <div>
           <label>
-            <h3>last name</h3>
+            <h3>Last Name</h3>
           </label>
           <input
+            className="input"
             onChange={(e) => setLastName(e.target.value)}
             value={lastName}
           />
@@ -74,7 +78,7 @@ const SignUpForm = () => {
 
       {/* User Info */}
       <h2>Login Info</h2>
-      <div>
+      <div className="user-info">
         <div>
           <label htmlFor="">
             <h3>Email</h3>
@@ -82,6 +86,7 @@ const SignUpForm = () => {
           <input
             type="email"
             value={email}
+            className="input"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -90,6 +95,7 @@ const SignUpForm = () => {
             <h3>Password</h3>
           </label>
           <input
+            className="input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -108,7 +114,7 @@ const SignUpForm = () => {
 
       {/* address info (optional) */}
       <h2>Location info (Optional)</h2>
-      <div>
+      <div className="optional-info">
         <div>
           <label>
             <h3>Address line one</h3>

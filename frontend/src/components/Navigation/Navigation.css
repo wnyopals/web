@@ -22,6 +22,7 @@ background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0
     text-decoration: none;
     color: black;
     border: solid black 1px;
+    border-radius: 5px;
     background-color: rgba(128, 128, 128, 0.5);
     transition: background-color ease-in 0.25s
 }
