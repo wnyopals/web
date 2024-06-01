@@ -1,22 +1,21 @@
-import { listing } from "../../types/Listing";
 import { cartState } from "../store/cart";
 
-export function loadCartState(): listing[] {
+export function loadCartState(): cartState {
   try {
     const cart = localStorage.getItem("cart");
     console.log("Cart", cart)
-    if (cart === null) return [];
-    const parsedCart: listing[] = JSON.parse(cart);
-    return parsedCart;
+    if (cart === null) return {cart: [], clientSecret: "", amount: 0.00};
+    const parsedCartState: cartState = JSON.parse(cart);
+    return parsedCartState;
   } catch (e) {
     console.error("Cart could not be loaded from local storage");
-    return [];
+    return {cart: [], clientSecret: "", amount: 0.00};
   }
 }
 
 export function saveCartState(state: cartState) {
   try {
-    const cart = JSON.stringify(state.cart);
+    const cart = JSON.stringify({cart: state.cart, clientSecret: state.clientSecret});
     localStorage.setItem("cart", cart);
   } catch (e) {
     console.error("Could not save cart to local storage", e);
