@@ -12,6 +12,7 @@ import SignUpForm from './Pages/UserSignUp/SignUpForm'
 import Cart from './Pages/Cart/Cart'
 
 function App() {
+  
   return (
     <>
       <Navigation/>
@@ -24,7 +25,9 @@ function App() {
         <Route path={"/admin/update/:id"} element={ <EditListingFormWrapper/> } />
         <Route path="/sign-in" element={<SignInForm />}/>
         <Route path="/sign-up" element={<SignUpForm />}/>
-        <Route path='/cart' element={<Cart />} />
+        <Route path='/cart' element={
+            <Cart />
+        } />
       </Routes>
       <Footer />
     </>
