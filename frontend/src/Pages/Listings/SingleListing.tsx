@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, removeItem } from "../../store/cart";
 import { RootState } from "../../store";
+import ImageSlideShow from "../../components/ImageSlideShow/ImageSlideShow";
 
 const SingleListing = () => {
   const params = useParams();
@@ -109,9 +110,13 @@ const SingleListing = () => {
     <div className="listing-container">
       <div className="showcase">
         <div className="basic-info">
-          <div className="photos">
-            <img />
-          </div>
+          <ImageSlideShow images={[
+            "https://i.ibb.co/yf6gYkm/F583-F9-CD-C3-B7-4803-A353-319-A3-F1-FB959-1-201-a.jpg",
+            "https://i.ibb.co/Y0fxXvb/9-B5-A39-F3-43-F3-48-B9-8-F7-F-E312-B6403-EF1-1-201-a.jpg",
+            "https://i.ibb.co/Nx7YMVB/5-A5-ED896-5317-46-D2-B6-B1-9-ECBE4-CE9535-1-201-a.jpg",
+          ]}
+          imageHeight={250}
+          imageWidth={250}/>
           <div className="showcase-information">
             <h2 className="title">{data?.title}</h2>
             <p className="description">{data?.description}</p>

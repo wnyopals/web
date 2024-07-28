@@ -1,14 +1,18 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
 
 import "./Cart.css"
+import { setAmount } from "../../store/cart";
+// import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const cart = useSelector((state: RootState) => state.cart.cart);
-  const subtotal: number = Math.round(cart.reduce<number>(
-    (sum, current) => sum + current.price,
-    0
-  ));
+  const subtotal: number = useSelector((state: RootState) => state.cart.amount)
+  dispatch(setAmount(subtotal))
+
+
+
   return (
     <div className="cart-page">
       <div className="cart-items">
@@ -27,7 +31,7 @@ const Cart = () => {
             <p>{subtotal}</p>
         </div>
         <div className="actions">
-            <button>Checkout now</button>
+          <button>Checkout</button>
         </div>
       </div>
     </div>

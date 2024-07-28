@@ -6,7 +6,7 @@ const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const { ValidationError } = require("sequelize");
 const indexRoutes = require('./routes/index');
-const { environment } = require("./config");
+const { environment, stripeApiKey } = require("./config");
 const isProduction = environment === "production";
 
 const app = express();

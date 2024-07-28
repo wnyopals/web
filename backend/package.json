@@ -31,10 +31,12 @@
     "per-env": "^1.0.2",
     "pg": "^8.11.3",
     "sequelize": "^6.31.1",
-    "sequelize-cli": "^6.6.0"
+    "sequelize-cli": "^6.6.0",
+    "stripe": "^15.8.0"
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",
     "nodemon": "^3.0.1"
-  }
+  },
+  "proxy": "<localhost:8080>"
 }

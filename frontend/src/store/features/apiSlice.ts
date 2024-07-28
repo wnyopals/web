@@ -15,11 +15,18 @@ import { InquiryRequest, InquiryResponse } from "../../../types/Inquerries";
 export const listingsApi = createApi({
   reducerPath: "listingsAPI",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "http://localhost:8080/api",
+    baseUrl: "http://localhost:8080/api",
     // baseUrl: "https://web-main.onrender.com/api",
-    baseUrl: "https://web-main-kxmo.onrender.com/api"
+    // baseUrl: "https://web-main-kxmo.onrender.com/api"
   }),
-  tagTypes: ["Listing", "Attributes", "Authentication", "User", "Inquiries"],
+  tagTypes: [
+    "Listing",
+    "Attributes",
+    "Authentication",
+    "User",
+    "Inquiries",
+    "clientsecret",
+  ],
   endpoints: (builder) => ({
     getAllListings: builder.query<listing[], void>({
       query: () => "listing",
@@ -114,7 +121,7 @@ export const listingsApi = createApi({
         method: "PUT",
         body: currentUser,
       }),
-      invalidatesTags: ["User"]
+      invalidatesTags: ["User"],
     }),
     //sets the user to "deleted"
     deleteUser: builder.mutation<number, number>({
@@ -139,26 +146,27 @@ export const listingsApi = createApi({
         } catch (error) {
           dispatch(setAuthToken(null));
           dispatch(setUser({}));
-          alert("Sign in failed")
+          alert("Sign in failed");
         }
       },
     }),
-    getInquiries: builder.query<InquiryResponse [], void>({
+    getInquiries: builder.query<InquiryResponse[], void>({
       query: () => `/inquiries`,
-      providesTags: ["Inquiries"]
+      providesTags: ["Inquiries"],
     }),
     getInquiry: builder.query<InquiryResponse, number>({
       query: (id) => `/inquiries/${id}`,
-      providesTags: ["Inquiries"]
+      providesTags: ["Inquiries"],
     }),
     submitInquiry: builder.mutation<InquiryResponse, InquiryRequest>({
       query: (inquiry) => ({
         url: "/inquiries",
         method: "POST",
-        body: inquiry
+        body: inquiry,
       }),
-      invalidatesTags: ["Inquiries"]
-    })
+      invalidatesTags: ["Inquiries"],
+    }),
+
   }),
 });
 
@@ -182,5 +190,5 @@ export const {
   useAddUserMutation,
   useGetInquiriesQuery,
   useGetInquiryQuery,
-  useSubmitInquiryMutation
+  useSubmitInquiryMutation,
 } = listingsApi;

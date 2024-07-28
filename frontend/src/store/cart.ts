@@ -4,10 +4,18 @@ import { loadCartState, saveCartState } from "../utils/localStorage";
 
 export type cartState = {
   cart: listing[];
+  amount: number;
 };
 
-const initialState: cartState = {
-  cart: loadCartState(),
+export type statusCartState = cartState & {
+  status: string;
+  error: string | undefined;
+};
+
+const initialState: statusCartState = {
+  status: "",
+  error: "",
+  ...loadCartState(),
 };
 
 export const cartSlice = createSlice({
@@ -22,20 +30,24 @@ export const cartSlice = createSlice({
         alert("Item is already in cart");
         return;
       }
-
       state.cart.push(action.payload);
+      state.amount += action.payload.price
       saveCartState(state);
     },
     removeItem: (state, action) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload.id);
+      state.amount -= action.payload.price
       saveCartState(state);
     },
     setItems: (state, action) => {
       state.cart = action.payload;
     },
+    setAmount: (state, action) => {
+      state.amount = action.payload
+    },
   },
 });
 
-export const { addItem, removeItem, setItems } = cartSlice.actions;
+export const { addItem, removeItem, setItems, setAmount } = cartSlice.actions;
 
 export default cartSlice.reducer;
