@@ -1,4 +1,4 @@
-import {Action, ThunkAction, configureStore} from "@reduxjs/toolkit"
+import {configureStore} from "@reduxjs/toolkit"
 import { listingsApi } from "./features/apiSlice"
 import { authSlice } from "./auth"
 import { cartSlice } from "./cart"
