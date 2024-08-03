@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 
 import "./Cart.css"
-import { setAmount } from "../../store/cart";
+import { removeItem, setAmount } from "../../store/cart";
 import ImageSlideShow from "../../components/ImageSlideShow/ImageSlideShow";
 // import { loadStripe } from "@stripe/stripe-js";
 
@@ -12,7 +12,9 @@ const Cart = () => {
   const subtotal: number = useSelector((state: RootState) => state.cart.amount)
   dispatch(setAmount(subtotal))
 
-
+  const remove = async (item) => {
+    await dispatch(removeItem(item))
+  }
 
   return (
     <div className="cart-page">
@@ -33,6 +35,9 @@ const Cart = () => {
               <h3>{item.title}</h3>
               <h4>{item.description}</h4>
               <p>{item.price}</p>
+            </div>
+            <div>
+              <button onClick={async () => remove(item)}>remove item</button>
             </div>
           </div>
         ))}
